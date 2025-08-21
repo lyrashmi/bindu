@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, url_for, send_from_directory
+from flask import Flask, request, render_template, abort, url_for, send_from_directory, redirect
 from markupsafe import Markup
 import markdown
 import os
@@ -7,7 +7,6 @@ import json
 import threading
 import time
 import unicodedata
-
 app = Flask(__name__)
 
 VAULT_DIR = os.path.join(os.path.dirname(__file__), 'vault')
@@ -145,6 +144,24 @@ def index():
 def extract_tags_from_content(content):
     return re.findall(r'(?<!\w)#([\w/-]+)', content)
 
+
+
+@app.route('/note/<note_name>/save', methods=['POST'])
+def save_note(note_name):
+    norm_name = normalize_unicode(note_name)
+    note_file = note_map.get(norm_name)
+    if not note_file:
+        abort(404)
+
+    new_content = request.form.get("markdown")
+    if not new_content:
+        abort(400, "No content received")
+
+    with open(note_file, "w", encoding="utf-8") as f:
+        f.write(new_content)
+
+    return redirect(url_for('note', note_name=note_name))
+
 @app.route('/note/<note_name>')
 def note(note_name):
     norm_name = normalize_unicode(note_name)
@@ -173,6 +190,7 @@ def note(note_name):
                            forwardlinks=forwardlinks,
                            tags=tags,
                            graph_nodes=list(graph_nodes),
+                           raw_md=raw_md,
                            graph_edges=edges)
 
 @app.route('/tag/<path:tag>')

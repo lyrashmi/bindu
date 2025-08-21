@@ -115,10 +115,11 @@
               {{ content | safe }}
             </div>
 
-            <form id="edit-form" method="POST" style="display:none;">
-              <textarea name="markdown" class="form-control" rows="20">{{ raw_content }}</textarea>
-              <button type="submit" class="btn btn-success mt-2">Save</button>
-            </form>
+           <form id="edit-form" method="POST" action="{{ url_for('save_note', note_name=note_name) }}" style="display:none;">
+            <textarea name="markdown" class="form-control" rows="20">{{ raw_md }}</textarea>
+            <button type="submit" class="btn btn-success mt-2">Save</button>
+          </form>
+
           </div>
         </div>
       </div>
