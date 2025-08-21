@@ -30,9 +30,9 @@
     <div class="container-fluid">
       <div class="top-section">
         <a href="{{ url_for('index') }}" class="btn btn-secondary mb-3">← Back to Index</a>
-        <a class="btn btn-primary mb-3" data-bs-toggle="collapse" href="#collapseLinkedBindus" role="button" aria-expanded="false" aria-controls="collapseExample">Linked bindus</a>
-        <a class="btn btn-primary mb-3" data-bs-toggle="collapse" href="#collapseMandala" role="button" aria-expanded="false" aria-controls="collapseExample">Maṇḍala</a>
-        <button class="btn btn-warning mb-3" onclick="toggleEdit()">Markdown Editor</button>
+        {% if current_user.is_authenticated and current_user.role in ["EDITOR", "ADMIN"] %}
+          <button class="btn btn-warning mb-3" onclick="toggleEdit()">Markdown Editor</button>
+        {% endif %}
       </div>
 
       <div class="row">
