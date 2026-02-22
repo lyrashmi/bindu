@@ -133,6 +133,10 @@ button, .btn {
   font-size: 1rem;
 }
 
+a {
+    text-decoration: underline !important;
+}
+
 button:hover,
 .btn:hover {
   background-color: var(--sand);
@@ -141,6 +145,9 @@ button:hover,
   box-shadow: 0 4px 12px rgba(27, 73, 101, 0.3);
 }
 
+.theme-toggle{
+  display: none;
+}
 /* Fixed button styling override for theme toggle and back buttons */
 .theme-toggle,
 .back-button {
@@ -151,6 +158,7 @@ button:hover,
   font-weight: normal !important;
   box-shadow: none !important;
   transform: none !important;
+  text-decoration: none !important;
 }
 
 .theme-toggle:hover,

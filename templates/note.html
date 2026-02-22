@@ -119,8 +119,24 @@
         border: none;
         border-bottom: 3px solid transparent;
         font-weight: 500;
-        transition: border-color 0.3s ease;
+        transition: none; /* disable animated visual change */
         padding: 12px 20px;
+        background: transparent; /* ensure no background change on hover */
+      }
+
+      /* Prevent any visual change on hover or focus while keeping tabs clickable */
+      .note-tabs .nav-link:hover,
+      .note-tabs .nav-link:focus {
+        color: var(--text) !important;
+        background: transparent !important;
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      /* Hide the theme toggle explicitly here to override other inline rules */
+      .theme-toggle {
+        display: none !important;
       }
 
       .note-tabs .nav-link.active {
@@ -331,8 +347,8 @@
           id: note_id,
           label: note_id,
           shape: 'dot',
-          color: { background: 'white', border: '#1b4965', highlight: { background: '#1b4965', border: '#1b4965' }},
-          font: { color: '#1b4965', size: 20 }
+          color: { background: 'white', border: 'black', highlight: { background: 'black', border: '#black' }},
+          font: { color: 'black', size: 20 }
         }))
       );
       const edges = new vis.DataSet(rawEdges);
@@ -368,7 +384,7 @@
 
     <!-- Footer -->
     <footer style="background: var(--card); border-top: 1px solid var(--border); padding: 30px 20px; margin-top: 60px; text-align: center; color: var(--text); font-size: 0.9rem;">
-      <p>© <a href="https://vimarshafoundation.org/" style="color: var(--text); text-decoration: none; border-bottom: 1px solid var(--text);">Vimarsha Foundation</a>. All rights reserved.</p>
+      <p>© <a href="https://vimarshafoundation.org/" style="color: var(--text); ">Vimarsha Foundation</a>. All rights reserved.</p>
     </footer>
   </body>
 </html>
