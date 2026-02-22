@@ -216,6 +216,13 @@
           autocomplete="off"
         >
         <div class="autocomplete-list" id="autocompleteList"></div>
+        {% if session.get('role') == 'admin' %}
+        <div style="text-align: center; margin-top: 15px;">
+          <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createBinduModal" style="border-radius: 20px; padding: 8px 24px;">
+            + Create Bindu
+          </button>
+        </div>
+        {% endif %}
       </div>
 
       <!-- Results Container -->
@@ -388,6 +395,66 @@
       // Initialize on page load
       initializePage();
     </script>
+
+    {% if session.get('role') == 'admin' %}
+    <!-- Create Bindu Modal -->
+    <div class="modal fade" id="createBinduModal" tabindex="-1" aria-labelledby="createBinduModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createBinduModalLabel">Create New Bindu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="create-bindu-form">
+              <div class="mb-3">
+                <label class="form-label" for="create-bindu-name">Bindu Name</label>
+                <input type="text" name="name" id="create-bindu-name" class="form-control" placeholder="e.g., Prakāśa (प्रकाश)" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="create-bindu-markdown">Content (Markdown)</label>
+                <textarea name="markdown" id="create-bindu-markdown" class="form-control" rows="15" placeholder="# Title&#10;&#10;Your markdown content here..."></textarea>
+              </div>
+            </form>
+            <div id="create-bindu-alert" class="alert" style="display:none;"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" id="save-create-bindu" class="btn btn-primary">Create Bindu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('save-create-bindu').addEventListener('click', function() {
+        const form = document.getElementById('create-bindu-form');
+        const alertEl = document.getElementById('create-bindu-alert');
+        const formData = new FormData(form);
+        
+        alertEl.style.display = 'none';
+        
+        fetch('/bindu/create', {
+          method: 'POST',
+          body: formData,
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        }).then(r => r.json()).then(data => {
+          if (data && (data.status === 'ok' || data.status === 'warning')) {
+            // Redirect to the new bindu
+            window.location.href = data.url;
+          } else {
+            alertEl.className = 'alert alert-danger';
+            alertEl.style.display = 'block';
+            alertEl.innerText = (data && data.message) ? data.message : 'Error creating bindu';
+          }
+        }).catch(err => {
+          alertEl.className = 'alert alert-danger';
+          alertEl.style.display = 'block';
+          alertEl.innerText = 'Error creating bindu';
+        });
+      });
+    </script>
+    {% endif %}
 
     <!-- Footer -->
     <footer style="background: var(--card); border-top: 1px solid var(--border); padding: 30px 20px; margin-top: 60px; text-align: center; color: var(--text); font-size: 0.9rem;">

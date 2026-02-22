@@ -292,6 +292,8 @@ def bindu(bindu_name):
                         history.append({'sha': sha, 'author': author, 'date': date, 'message': subj})
     except Exception:
         history = []
+    # Prepare notes list for link autocompletion
+    all_notes_json = json.dumps(sorted(note_map.keys()))
     return render_template('note.html',
                            note_name=bindu_name,
                            content=content,
@@ -303,7 +305,8 @@ def bindu(bindu_name):
                            graph_edges=edges,
                            github_url=github_url,
                            notes_index_html=notes_index_html,
-                           history=history)
+                           history=history,
+                           all_notes_json=all_notes_json)
 
 
 @app.route('/tag/<path:tag>')
@@ -426,6 +429,9 @@ def render_notes_entry(filename):
     try:
         with open(safe_path, encoding='utf-8') as f:
             md = f.read()
+        # Parse obsidian-style links and tags
+        md = parse_links(md)
+        md = parse_tags_links(md)
         return render_markdown(md)
     except Exception:
         abort(404)
@@ -466,7 +472,7 @@ def add_note_entry(bindu_name):
 
         # Commit the new files (entry + index) to git with a descriptive message
         try:
-            commit_message = f"Add note entry for {bindu_name} by {session.get('username')} at {time.ctime(timestamp)}"
+            commit_message = f"Add bindu entry for {bindu_name} by {session.get('username')} at {time.ctime(timestamp)}"
             ok, out = git_commit([entry_path, index_file], commit_message, author=session.get('username'))
         except Exception as e:
             ok, out = (False, str(e))
@@ -482,6 +488,68 @@ def add_note_entry(bindu_name):
         return redirect(url_for('bindu', bindu_name=bindu_name))
 
     return render_template('add_note.html', bindu_name=bindu_name)
+
+
+@app.route('/bindu/create', methods=['POST'])
+def create_bindu():
+    """Create a new bindu (admin only)."""
+    if session.get('role') != 'admin':
+        return jsonify({'status': 'error', 'message': 'Forbidden'}), 403
+
+    bindu_name = request.form.get('name', '').strip()
+    markdown_content = request.form.get('markdown', '').strip()
+
+    if not bindu_name:
+        return jsonify({'status': 'error', 'message': 'Bindu name is required'}), 400
+
+    # Normalize and check if already exists
+    norm_name = normalize_unicode(bindu_name)
+    if norm_name in note_map:
+        return jsonify({'status': 'error', 'message': f'Bindu "{bindu_name}" already exists'}), 409
+
+    # Create file in Sanskrit Archive
+    archive_dir = os.path.join(VAULT_DIR, 'Sanskrit Archive')
+    os.makedirs(archive_dir, exist_ok=True)
+    
+    filename = f"{bindu_name}.md"
+    filepath = os.path.join(archive_dir, filename)
+    rel_path = os.path.join('vault', 'Sanskrit Archive', filename)
+
+    # Write the file
+    try:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(markdown_content if markdown_content else f"# {bindu_name}\n\n")
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+    # Update note_map
+    note_map[norm_name] = filepath
+
+    # Update vault_index.json
+    try:
+        with open(DB_PATH, 'r', encoding='utf-8') as db:
+            index_data = json.load(db)
+        if 'notes' not in index_data:
+            index_data['notes'] = {}
+        index_data['notes'][bindu_name] = rel_path
+        with open(DB_PATH, 'w', encoding='utf-8') as db:
+            json.dump(index_data, db, indent=2)
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': f'Index update failed: {e}'}), 500
+
+    # Git commit
+    timestamp = int(time.time())
+    commit_message = f"Create bindu {bindu_name} by {session.get('username')} at {time.ctime(timestamp)}"
+    try:
+        ok, out = git_commit([filepath, DB_PATH], commit_message, author=session.get('username'))
+    except Exception as e:
+        ok, out = (False, str(e))
+
+    return jsonify({
+        'status': 'ok' if ok else 'warning',
+        'message': 'Bindu created' + ('' if ok else f' (git: {out})'),
+        'url': url_for('bindu', bindu_name=bindu_name)
+    })
 
 
 @app.route('/bindu/<bindu_name>/edit', methods=['POST'])

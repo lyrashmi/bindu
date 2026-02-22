@@ -187,6 +187,36 @@
         color: var(--sand);
         text-decoration: underline;
       }
+
+      /* Link autocomplete styles */
+      .link-autocomplete {
+        position: absolute;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 2000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: none;
+      }
+      .link-autocomplete.active {
+        display: block;
+      }
+      .link-autocomplete-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        color: var(--text);
+        border-bottom: 1px solid var(--border);
+      }
+      .link-autocomplete-item:last-child {
+        border-bottom: none;
+      }
+      .link-autocomplete-item:hover,
+      .link-autocomplete-item.highlighted {
+        background: var(--spiritual-blue);
+        color: #fff;
+      }
     </style>
 
     <script>
@@ -457,7 +487,7 @@
                 {% for c in history %}
                   <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div>
-                      <strong>{{ c.message }}</strong>
+                      <strong>{{ c.message | replace('Edit note', 'Edit bindu') | replace('Add note entry', 'Add bindu entry') }}</strong>
                       <div><small>by {{ c.author }} on {{ c.date }}</small></div>
                     </div>
                     <div class="text-end">
@@ -682,6 +712,129 @@
           });
         }
       });
+    </script>
+
+    <!-- Link autocomplete dropdown (shared by all textareas) -->
+    <div id="link-autocomplete" class="link-autocomplete"></div>
+
+    <!-- Link autocomplete script -->
+    <script>
+    (function() {
+      const allNotes = {{ all_notes_json | safe }};
+      const autocompleteEl = document.getElementById('link-autocomplete');
+      let activeTextarea = null;
+      let bracketStart = -1;
+      let highlightedIndex = -1;
+
+      // Attach to all markdown textareas
+      const textareas = document.querySelectorAll('textarea[name="markdown"]');
+
+      textareas.forEach(textarea => {
+        textarea.addEventListener('input', handleInput);
+        textarea.addEventListener('keydown', handleKeydown);
+        textarea.addEventListener('blur', () => {
+          setTimeout(() => autocompleteEl.classList.remove('active'), 150);
+        });
+      });
+
+      function handleInput(e) {
+        const textarea = e.target;
+        activeTextarea = textarea;
+        const val = textarea.value;
+        const pos = textarea.selectionStart;
+
+        // Find [[ before cursor
+        const beforeCursor = val.substring(0, pos);
+        const lastBracket = beforeCursor.lastIndexOf('[[');
+        const lastClose = beforeCursor.lastIndexOf(']]');
+
+        if (lastBracket > lastClose && lastBracket !== -1) {
+          bracketStart = lastBracket + 2;
+          const query = beforeCursor.substring(bracketStart).toLowerCase();
+
+          const filtered = allNotes.filter(n => n.toLowerCase().includes(query)).slice(0, 8);
+
+          if (filtered.length > 0) {
+            showAutocomplete(textarea, filtered);
+          } else {
+            autocompleteEl.classList.remove('active');
+          }
+        } else {
+          autocompleteEl.classList.remove('active');
+          bracketStart = -1;
+        }
+      }
+
+      function handleKeydown(e) {
+        if (!autocompleteEl.classList.contains('active')) return;
+
+        const items = autocompleteEl.querySelectorAll('.link-autocomplete-item');
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          highlightedIndex = Math.min(highlightedIndex + 1, items.length - 1);
+          updateHighlight(items);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          highlightedIndex = Math.max(highlightedIndex - 1, 0);
+          updateHighlight(items);
+        } else if (e.key === 'Enter' || e.key === 'Tab') {
+          if (highlightedIndex >= 0 && items[highlightedIndex]) {
+            e.preventDefault();
+            selectItem(items[highlightedIndex].textContent);
+          }
+        } else if (e.key === 'Escape') {
+          autocompleteEl.classList.remove('active');
+        }
+      }
+
+      function updateHighlight(items) {
+        items.forEach((item, i) => {
+          if (i === highlightedIndex) {
+            item.classList.add('highlighted');
+            item.scrollIntoView({ block: 'nearest' });
+          } else {
+            item.classList.remove('highlighted');
+          }
+        });
+      }
+
+      function showAutocomplete(textarea, suggestions) {
+        highlightedIndex = 0;
+        autocompleteEl.innerHTML = '';
+        suggestions.forEach((note, i) => {
+          const item = document.createElement('div');
+          item.className = 'link-autocomplete-item' + (i === 0 ? ' highlighted' : '');
+          item.textContent = note;
+          item.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            selectItem(note);
+          });
+          autocompleteEl.appendChild(item);
+        });
+
+        // Position near the textarea cursor
+        const rect = textarea.getBoundingClientRect();
+        autocompleteEl.style.left = (rect.left + 20) + 'px';
+        autocompleteEl.style.top = (rect.top + 60) + 'px';
+        autocompleteEl.style.minWidth = '200px';
+        autocompleteEl.classList.add('active');
+      }
+
+      function selectItem(noteName) {
+        if (!activeTextarea || bracketStart === -1) return;
+        const val = activeTextarea.value;
+        const pos = activeTextarea.selectionStart;
+        const before = val.substring(0, bracketStart);
+        const after = val.substring(pos);
+        const newVal = before + noteName + ']]' + after;
+        activeTextarea.value = newVal;
+        const newPos = bracketStart + noteName.length + 2;
+        activeTextarea.setSelectionRange(newPos, newPos);
+        activeTextarea.focus();
+        autocompleteEl.classList.remove('active');
+        bracketStart = -1;
+      }
+    })();
     </script>
 
     <!-- Footer -->
