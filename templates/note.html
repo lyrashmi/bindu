@@ -30,10 +30,7 @@
     <div class="container-fluid">
       <div class="top-section">
         <a href="{{ url_for('index') }}" class="btn btn-secondary mb-3">← Back to Index</a>
-        {% if current_user.is_authenticated and current_user.role in ["EDITOR", "ADMIN"] %}
-          <button class="btn btn-warning mb-3" onclick="toggleEdit()">Markdown Editor</button>
-        {% endif %}
-      </div>
+       </div>
 
       <div class="row">
         <div class="col-4">
