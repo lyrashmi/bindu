@@ -1,2 +1,7 @@
-# bindu
-Bindu: A browser for the mandalic hypertext
+# Bindu 
+---
+## Features
+[Updated Content from PR]
+---
+## Installation
+### macOS [Sample Part of README content]...
