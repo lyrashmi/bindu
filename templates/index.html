@@ -191,10 +191,12 @@
       <img src="{{ url_for('static', filename='logo-dark.png') }}" alt="Bindu Logo" class="logo-dark" />
     </div>
 
-    <!-- Theme Toggle Button -->
-    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
-      ☀
-    </button>
+    <!-- Login / Logout Button -->
+    {% if session.get('username') %}
+      <a href="{{ url_for('logout') }}" class="login-button" title="Logout ({{ session.get('username') }})">{{ session.get('username') }} ⎋</a>
+    {% else %}
+      <a href="{{ url_for('login', next=request.path) }}" class="login-button" title="Login">Login</a>
+    {% endif %}
 
     <div class="container">
       <!-- Introduction -->

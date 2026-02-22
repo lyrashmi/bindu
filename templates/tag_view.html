@@ -98,10 +98,14 @@
   <!-- Back Button (Floating) -->
   <a href="{{ url_for('index') }}" class="back-button" title="Back to home">←</a>
 
-    <!-- Theme Toggle Button -->
-    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
-      ☀
-    </button>  <!-- Logo -->
+    <!-- Login / Logout Button -->
+    {% if session.get('username') %}
+      <a href="{{ url_for('logout') }}" class="login-button" title="Logout ({{ session.get('username') }})">{{ session.get('username') }} ⎋</a>
+    {% else %}
+      <a href="{{ url_for('login', next=request.path) }}" class="login-button" title="Login">Login</a>
+    {% endif %}
+
+    <!-- Logo -->
   <div class="logo-container">
     <img src="{{ url_for('static', filename='logo.png') }}" alt="Bindu Logo" class="logo-light" />
     <img src="{{ url_for('static', filename='logo-dark.png') }}" alt="Bindu Logo" class="logo-dark" />

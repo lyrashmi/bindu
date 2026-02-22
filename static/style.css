@@ -161,6 +161,28 @@ button:hover,
   text-decoration: none !important;
 }
 
+/* Login button (top-right) */
+.login-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 12px;
+  border: 2px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+  z-index: 1010;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.login-button:hover {
+  background: transparent;
+  color: var(--text);
+  text-decoration: underline;
+}
+
 .theme-toggle:hover,
 .back-button:hover {
   background: transparent !important;
