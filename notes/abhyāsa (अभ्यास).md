@@ -3,3 +3,4 @@
 - [छोम्मेन्त् ओस्न अओग् स्](/notes_entries/abhyāsa (अभ्यास)_diego_1771760213________________________.md) by diego on Sun Feb 22 12:36:53 2026
 - [Testing](/notes_entries/abhyāsa (अभ्यास)_ravi_1771760428_Testing.md) by ravi on Sun Feb 22 12:40:28 2026
 - [tessss](/notes_entries/abhyāsa (अभ्यास)_diego_1771776642_tessss.md) by diego on Sun Feb 22 17:10:42 2026
+- [bb](/notes_entries/abhyāsa (अभ्यास)_diego_1771777849_bb.md) by diego on Sun Feb 22 17:30:49 2026
