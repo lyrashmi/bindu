@@ -62,7 +62,7 @@ def parse_links(content):
             img_url = '/vault/' + rel_path
             return f'<img src="{img_url}" alt="{display}" style="max-width: 100%; height: auto;" />'
         else:
-            return f'<a href="/note/{norm_target}">{display}</a>'
+            return f'<a href="/bindu/{norm_target}">{display}</a>'
 
     return re.sub(r'(!)?\[\[([^\]]+)\]\]', replacer, content)
 
@@ -179,9 +179,13 @@ def update_vault_index():
         except Exception:
             pass
 
+        # Convert absolute paths to relative paths for the JSON file
+        base_dir = os.path.dirname(__file__)
+        relative_note_map = {k: os.path.relpath(v, base_dir).replace(os.path.sep, '/') for k, v in note_map.items()}
+
         with open(DB_PATH, "w", encoding="utf-8") as f:
             json.dump({
-                "notes": note_map,
+                "notes": relative_note_map,
                 "forwardlinks": link_graph,
                 "backlinks": backlinks_map
             }, f, indent=2)
@@ -199,9 +203,9 @@ def extract_tags_from_content(content):
 
 
 
-@app.route('/note/<note_name>/save', methods=['POST'])
-def save_note(note_name):
-    norm_name = normalize_unicode(note_name)
+@app.route('/bindu/<bindu_name>/save', methods=['POST'])
+def save_bindu(bindu_name):
+    norm_name = normalize_unicode(bindu_name)
     note_file = note_map.get(norm_name)
     if not note_file:
         abort(404)
@@ -213,11 +217,11 @@ def save_note(note_name):
     with open(note_file, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    return redirect(url_for('note', note_name=note_name))
+    return redirect(url_for('bindu', bindu_name=bindu_name))
 
-@app.route('/note/<note_name>')
-def note(note_name):
-    norm_name = normalize_unicode(note_name)
+@app.route('/bindu/<bindu_name>')
+def bindu(bindu_name):
+    norm_name = normalize_unicode(bindu_name)
     note_file = note_map.get(norm_name)
     if not note_file:
         abort(404)
@@ -241,7 +245,7 @@ def note(note_name):
             abort(404)
     else:
         tags = extract_tags_from_content(raw_md)
-        content, backlinks, forwardlinks = get_note_content(note_name)
+        content, backlinks, forwardlinks = get_note_content(bindu_name)
 
     graph_nodes = set(backlinks + forwardlinks + [norm_name])
     edges = []
@@ -269,12 +273,11 @@ def note(note_name):
     except Exception:
         notes_index_html = ''
 
-    # Collect git history for this note and its entries
+    # Collect git history for this bindu and its entries
     history = []
     try:
         repo_dir = os.path.dirname(__file__)
         files = [note_file]
-        norm_name = normalize_unicode(note_name)
         for fname in os.listdir(NOTES_ENTRIES_DIR):
             if fname.startswith(norm_name + '_'):
                 files.append(os.path.join(NOTES_ENTRIES_DIR, fname))
@@ -290,7 +293,7 @@ def note(note_name):
     except Exception:
         history = []
     return render_template('note.html',
-                           note_name=note_name,
+                           note_name=bindu_name,
                            content=content,
                            backlinks=backlinks,
                            forwardlinks=forwardlinks,
@@ -388,8 +391,8 @@ def notes_entries_files(filename):
     return send_from_directory(NOTES_ENTRIES_DIR, filename)
 
 
-@app.route('/note/<note_name>/commit/<sha>')
-def note_commit(note_name, sha):
+@app.route('/bindu/<bindu_name>/commit/<sha>')
+def bindu_commit(bindu_name, sha):
     """Return JSON with commit metadata and diff for the given sha."""
     repo_dir = os.path.dirname(__file__)
     try:
@@ -428,12 +431,12 @@ def render_notes_entry(filename):
         abort(404)
 
 
-@app.route('/note/<note_name>/notes/add', methods=['GET', 'POST'])
-def add_note_entry(note_name):
+@app.route('/bindu/<bindu_name>/notes/add', methods=['GET', 'POST'])
+def add_note_entry(bindu_name):
     if 'username' not in session:
-        return redirect(url_for('login', next=url_for('note', note_name=note_name)))
+        return redirect(url_for('login', next=url_for('bindu', bindu_name=bindu_name)))
 
-    norm_name = normalize_unicode(note_name)
+    norm_name = normalize_unicode(bindu_name)
     if request.method == 'POST':
         body = request.form.get('markdown')
         title = request.form.get('title') or f'Note by {session.get("username")}'
@@ -442,7 +445,7 @@ def add_note_entry(note_name):
             # For AJAX calls, return JSON error
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return jsonify({'status': 'error', 'message': 'Note cannot be empty'}), 400
-            return render_template('add_note.html', note_name=note_name)
+            return render_template('add_note.html', bindu_name=bindu_name)
 
         # create entry file
         timestamp = int(time.time())
@@ -453,7 +456,7 @@ def add_note_entry(note_name):
             ef.write(f"# {title}\n\n")
             ef.write(f"_by {session['username']} on {time.ctime(timestamp)}_\n\n")
             ef.write(body)
-            ef.write(f"\n\n[Original bindu](/note/{note_name})\n")
+            ef.write(f"\n\n[Original bindu](/bindu/{bindu_name})\n")
 
         # add link to index file for this note
         index_file = os.path.join(NOTES_DIR, f"{norm_name}.md")
@@ -463,7 +466,7 @@ def add_note_entry(note_name):
 
         # Commit the new files (entry + index) to git with a descriptive message
         try:
-            commit_message = f"Add note entry for {note_name} by {session.get('username')} at {time.ctime(timestamp)}"
+            commit_message = f"Add note entry for {bindu_name} by {session.get('username')} at {time.ctime(timestamp)}"
             ok, out = git_commit([entry_path, index_file], commit_message, author=session.get('username'))
         except Exception as e:
             ok, out = (False, str(e))
@@ -476,21 +479,21 @@ def add_note_entry(note_name):
             flash('Note saved and committed', 'success')
         else:
             flash('Note saved but git commit failed: ' + str(out), 'warning')
-        return redirect(url_for('note', note_name=note_name))
+        return redirect(url_for('bindu', bindu_name=bindu_name))
 
-    return render_template('add_note.html', note_name=note_name)
+    return render_template('add_note.html', bindu_name=bindu_name)
 
 
-@app.route('/note/<note_name>/edit', methods=['POST'])
-def edit_note_entry(note_name):
+@app.route('/bindu/<bindu_name>/edit', methods=['POST'])
+def edit_bindu(bindu_name):
     # Only admins may edit
     if session.get('role') != 'admin':
         return jsonify({'status': 'error', 'message': 'Forbidden'}), 403
 
-    norm_name = normalize_unicode(note_name)
+    norm_name = normalize_unicode(bindu_name)
     note_file = note_map.get(norm_name)
     if not note_file:
-        return jsonify({'status': 'error', 'message': 'Note not found'}), 404
+        return jsonify({'status': 'error', 'message': 'Bindu not found'}), 404
 
     new_md = request.form.get('markdown')
     if new_md is None:
@@ -500,13 +503,13 @@ def edit_note_entry(note_name):
         with open(note_file, 'w', encoding='utf-8') as nf:
             nf.write(new_md)
         timestamp = int(time.time())
-        commit_message = f"Edit note {note_name} by {session.get('username')} at {time.ctime(timestamp)}"
+        commit_message = f"Edit bindu {bindu_name} by {session.get('username')} at {time.ctime(timestamp)}"
         ok, out = git_commit([note_file], commit_message, author=session.get('username'))
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
     # Return rendered HTML for the updated content
-    rendered_html, _, _ = get_note_content(note_name)
+    rendered_html, _, _ = get_note_content(bindu_name)
     return jsonify({'status': 'ok' if ok else 'error', 'git': out, 'html': rendered_html})
 
 if __name__ == '__main__':

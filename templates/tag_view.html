@@ -117,7 +117,7 @@
       <ul class="list-group">
         {% for note_id in notes %}
           <li class="list-group-item">
-            <a href="{{ url_for('note', note_name=note_id) }}" class="text-decoration-none">
+            <a href="{{ url_for('bindu', bindu_name=note_id) }}" class="text-decoration-none">
               {{ note_id }}
             </a>
           </li>

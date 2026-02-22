@@ -228,13 +228,8 @@
       <!-- Tab Navigation -->
       <ul class="nav nav-tabs note-tabs" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history-pane" type="button" role="tab" aria-controls="history-pane" aria-selected="false">
-            History
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
           <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content-pane" type="button" role="tab" aria-controls="content-pane" aria-selected="true">
-            Content
+            Bindu
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -257,56 +252,16 @@
             Outgoing Links
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history-pane" type="button" role="tab" aria-controls="history-pane" aria-selected="false">
+            History
+          </button>
+        </li>
       </ul>
 
       <!-- Tab Content -->
       <div class="tab-content note-tab-content">
-        <!-- History Tab -->
-        <div class="tab-pane fade" id="history-pane" role="tabpanel" aria-labelledby="history-tab">
-          <div class="card card-body">
-            <h4>Change history</h4>
-            {% if history %}
-              <ul class="list-group">
-                {% for c in history %}
-                  <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div>
-                      <strong>{{ c.message }}</strong>
-                      <div><small>by {{ c.author }} on {{ c.date }}</small></div>
-                    </div>
-                    <div class="text-end">
-                      <span class="badge bg-light text-muted" style="font-family:monospace;">{{ c.sha[:7] }}</span>
-                      <button class="btn btn-sm btn-outline-secondary ms-2" data-sha="{{ c.sha }}" onclick="showCommit(this.dataset.sha)">View</button>
-                    </div>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p style="opacity:0.7;">No history available.</p>
-            {% endif %}
-          </div>
-        </div>
-    <!-- Commit details modal -->
-    <div class="modal fade" id="commitModal" tabindex="-1" aria-labelledby="commitModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="commitModalLabel">Commit</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div id="commit-meta" style="margin-bottom:12px; font-size:0.95rem;"></div>
-            <!-- HTML diff will be injected into this container (styled in static/style.css) -->
-            <div id="commit-diff-html" class="diff-container" style="display:none;"></div>
-            <!-- Raw fallback diff (unified) -->
-            <pre id="commit-diff-raw" style="background:#1e1e1e; color:#e6e6e6; padding:12px; overflow:auto; white-space:pre-wrap; word-break:break-word; display:none;"></pre>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-        <!-- Content Tab -->
+        <!-- Bindu Content Tab -->
         <div class="tab-pane fade show active" id="content-pane" role="tabpanel" aria-labelledby="content-tab">
           <div class="row">
             <div class="col-12">
@@ -331,7 +286,7 @@
                   {{ content | safe }}
                 </div>
 
-                <form id="edit-form" method="POST" action="{{ url_for('save_note', note_name=note_name) }}" style="display:none;">
+                <form id="edit-form" method="POST" action="{{ url_for('save_bindu', bindu_name=note_name) }}" style="display:none;">
                   <textarea name="markdown" class="form-control" rows="20">{{ raw_md }}</textarea>
                   <button type="submit" class="btn btn-success mt-2">Save</button>
                 </form>
@@ -462,7 +417,7 @@
                 {% if backlinks %}
                   <ul class="links-list">
                     {% for link in backlinks %}
-                      <li><a href="{{ url_for('note', note_name=link) }}">{{ link }}</a></li>
+                      <li><a href="{{ url_for('bindu', bindu_name=link) }}">{{ link }}</a></li>
                     {% endfor %}
                   </ul>
                 {% else %}
@@ -482,7 +437,7 @@
                 {% if forwardlinks %}
                   <ul class="links-list">
                     {% for link in forwardlinks %}
-                      <li><a href="{{ url_for('note', note_name=link) }}">{{ link }}</a></li>
+                      <li><a href="{{ url_for('bindu', bindu_name=link) }}">{{ link }}</a></li>
                     {% endfor %}
                   </ul>
                 {% else %}
@@ -490,6 +445,53 @@
                 {% endif %}
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- History Tab -->
+        <div class="tab-pane fade" id="history-pane" role="tabpanel" aria-labelledby="history-tab">
+          <div class="card card-body">
+            <h4>Change history</h4>
+            {% if history %}
+              <ul class="list-group">
+                {% for c in history %}
+                  <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                      <strong>{{ c.message }}</strong>
+                      <div><small>by {{ c.author }} on {{ c.date }}</small></div>
+                    </div>
+                    <div class="text-end">
+                      <span class="badge bg-light text-muted" style="font-family:monospace;">{{ c.sha[:7] }}</span>
+                      <button class="btn btn-sm btn-outline-secondary ms-2" data-sha="{{ c.sha }}" onclick="showCommit(this.dataset.sha)">View</button>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p style="opacity:0.7;">No history available.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commit details modal -->
+    <div class="modal fade" id="commitModal" tabindex="-1" aria-labelledby="commitModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="commitModalLabel">Commit</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="commit-meta" style="margin-bottom:12px; font-size:0.95rem;"></div>
+            <!-- HTML diff will be injected into this container (styled in static/style.css) -->
+            <div id="commit-diff-html" class="diff-container" style="display:none;"></div>
+            <!-- Raw fallback diff (unified) -->
+            <pre id="commit-diff-raw" style="background:#1e1e1e; color:#e6e6e6; padding:12px; overflow:auto; white-space:pre-wrap; word-break:break-word; display:none;"></pre>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -505,7 +507,7 @@
     </script>
 
     <script type="text/javascript">
-      const commitBaseUrl = '/note/{{ note_name|urlencode }}/commit/';
+      const commitBaseUrl = '/bindu/{{ note_name|urlencode }}/commit/';
       function showCommit(sha) {
         const modal = new bootstrap.Modal(document.getElementById('commitModal'));
           const metaEl = document.getElementById('commit-meta');
@@ -577,7 +579,7 @@
             network.on("click", function (params) {
               if (params.nodes.length > 0) {
                 const note = params.nodes[0];
-                window.location.href = "/note/" + note;
+                window.location.href = "/bindu/" + note;
               }
             });
             graphInitialized = true;
@@ -594,7 +596,7 @@
         if (addSubmit) {
           addSubmit.addEventListener('click', function () {
             const formData = new FormData(addForm);
-            fetch('{{ url_for('add_note_entry', note_name=note_name) }}', {
+            fetch('{{ url_for('add_note_entry', bindu_name=note_name) }}', {
               method: 'POST',
               body: formData,
               headers: { 'X-Requested-With': 'XMLHttpRequest' }
@@ -606,7 +608,7 @@
                   const modal = bootstrap.Modal.getInstance(modalEl);
                   modal.hide();
                   // refresh notes index
-                  fetch('{{ url_for('note', note_name=note_name) }}').then(resp => resp.text()).then(html => {
+                  fetch('{{ url_for('bindu', bindu_name=note_name) }}').then(resp => resp.text()).then(html => {
                     // parse returned HTML and extract #notes-index content
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
@@ -654,7 +656,7 @@
           saveEditBtn.addEventListener('click', function () {
             const editForm = document.getElementById('edit-note-form');
             const formData = new FormData(editForm);
-            fetch('{{ url_for('edit_note_entry', note_name=note_name) }}', {
+            fetch('{{ url_for('edit_bindu', bindu_name=note_name) }}', {
               method: 'POST',
               body: formData,
               headers: { 'X-Requested-With': 'XMLHttpRequest' }

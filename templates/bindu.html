@@ -797,7 +797,7 @@
           saveEditBtn.addEventListener('click', function () {
             const editForm = document.getElementById('edit-note-form');
             const formData = new FormData(editForm);
-            fetch('{{ url_for('edit_note_entry', note_name=note_name) }}', {
+            fetch('{{ url_for('edit_bindu', bindu_name=note_name) }}', {
               method: 'POST',
               body: formData,
               headers: { 'X-Requested-With': 'XMLHttpRequest' }

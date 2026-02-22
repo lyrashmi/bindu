@@ -291,7 +291,7 @@
         `;
         
         card.addEventListener('click', () => {
-          window.location.href = `/note/${encodeURIComponent(noteName)}`;
+          window.location.href = `/bindu/${encodeURIComponent(noteName)}`;
         });
 
         return card;
@@ -375,7 +375,7 @@
       }
 
       function selectNote(noteName) {
-        window.location.href = `/note/${encodeURIComponent(noteName)}`;
+        window.location.href = `/bindu/${encodeURIComponent(noteName)}`;
       }
 
       // Close autocomplete when clicking outside
