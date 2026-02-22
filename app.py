@@ -82,6 +82,18 @@ def get_note_content(note_name):
     with open(note_file, encoding='utf-8') as f:
         md_content = f.read()
 
+    # Check for #private tag
+    if re.search(r'(?<!\w)#private(?!\w)', md_content):
+        # Load the private.md file instead
+        private_file = os.path.join(os.path.dirname(__file__), 'text', 'private.md')
+        try:
+            with open(private_file, encoding='utf-8') as f:
+                md_content = f.read()
+            html = render_markdown(md_content)
+            return html, [], []
+        except FileNotFoundError:
+            abort(404)
+
     md_content = parse_links(md_content)
     md_content = parse_tags_links(md_content)
 
@@ -139,7 +151,8 @@ def update_vault_index():
 @app.route('/')
 def index():
     notes = sorted(note_map.keys())
-    return render_template('index.html', notes=notes)
+    notes_json = json.dumps(notes)
+    return render_template('index.html', notes=notes, notes_json=notes_json)
 
 def extract_tags_from_content(content):
     return re.findall(r'(?<!\w)#([\w/-]+)', content)
@@ -171,7 +184,10 @@ def note(note_name):
     with open(note_file, encoding='utf-8') as f:
         raw_md = f.read()
 
-    tags = extract_tags_from_content(raw_md)
+    # Check if private before extracting tags
+    is_private = bool(re.search(r'(?<!\w)#private(?!\w)', raw_md))
+    
+    tags = extract_tags_from_content(raw_md) if not is_private else []
     content, backlinks, forwardlinks = get_note_content(note_name)
 
     graph_nodes = set(backlinks + forwardlinks + [norm_name])

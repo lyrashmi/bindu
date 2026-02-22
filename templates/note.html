@@ -12,6 +12,167 @@
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
+    <style>
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 48px;
+        height: 48px;
+        background: transparent;
+        border: 2px solid var(--text);
+        color: var(--text);
+        font-size: 1.3rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: none;
+        z-index: 1000;
+        text-decoration: none;
+        padding: 0;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+        background: transparent;
+        border: 2px solid var(--text);
+        color: var(--text);
+        font-size: 1.3rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: none;
+        z-index: 1001;
+        padding: 0;
+      }
+
+      .logo-container {
+        text-align: center;
+        padding: 30px 20px 20px;
+        margin-bottom: 20px;
+      }
+
+      .logo-container img {
+        max-width: 300px;
+        height: auto;
+        margin: 0 auto;
+        transition: opacity 0.3s ease;
+      }
+
+      .logo-container .logo-light {
+        display: block;
+      }
+
+      .logo-container .logo-dark {
+        display: none;
+      }
+
+      [data-theme='dark'] .logo-container .logo-light {
+        display: none;
+      }
+
+      [data-theme='dark'] .logo-container .logo-dark {
+        display: block;
+      }
+
+      .container-fluid {
+        padding-top: 80px;
+      }
+
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--sand);
+        border: 2px solid var(--spiritual-blue);
+        color: var(--spiritual-blue);
+        font-size: 1.3rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(27, 73, 101, 0.2);
+        z-index: 1000;
+        text-decoration: none;
+      }
+
+      /* Tab System Styling */
+      .note-tabs {
+        border-bottom: 2px solid var(--text);
+        background: var(--card);
+      }
+
+      .note-tabs .nav-link {
+        color: var(--text);
+        border: none;
+        border-bottom: 3px solid transparent;
+        font-weight: 500;
+        transition: border-color 0.3s ease;
+        padding: 12px 20px;
+      }
+
+      .note-tabs .nav-link.active {
+        color: var(--text);
+        border-bottom-color: var(--text);
+        background: transparent;
+      }
+
+      .note-tab-content {
+        padding: 20px 0;
+      }
+
+      .mandala-container {
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #graph {
+        width: 100%;
+        height: 500px;
+        border: none;
+      }
+
+      .links-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .links-list li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .links-list li:last-child {
+        border-bottom: none;
+      }
+
+      .links-list a {
+        color: var(--spiritual-blue);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .links-list a:hover {
+        color: var(--sand);
+        text-decoration: underline;
+      }
+    </style>
+
     <script>
       const toggleTheme = () => {
         const current = document.documentElement.getAttribute("data-theme");
@@ -24,99 +185,130 @@
         document.documentElement.setAttribute("data-theme", saved);
       });
     </script>
-    <button id="theme-toggle" onclick="toggleTheme()">🌓</button>
   </head>
   <body>
+    <!-- Back Button (Floating) -->
+    <a href="{{ url_for('index') }}" class="back-button" title="Back to home">←</a>
+
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+      ☀
+    </button>
+
+    <!-- Logo -->
+    <div class="logo-container">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Bindu Logo" class="logo-light" />
+      <img src="{{ url_for('static', filename='logo-dark.png') }}" alt="Bindu Logo" class="logo-dark" />
+    </div>
+
     <div class="container-fluid">
-      <div class="top-section">
-        <a href="{{ url_for('index') }}" class="btn btn-secondary mb-3">← Back to Index</a>
-       </div>
+      <!-- Tab Navigation -->
+      <ul class="nav nav-tabs note-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content-pane" type="button" role="tab" aria-controls="content-pane" aria-selected="true">
+            Content
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="mandala-tab" data-bs-toggle="tab" data-bs-target="#mandala-pane" type="button" role="tab" aria-controls="mandala-pane" aria-selected="false">
+            Mandala
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="incoming-tab" data-bs-toggle="tab" data-bs-target="#incoming-pane" type="button" role="tab" aria-controls="incoming-pane" aria-selected="false">
+            Incoming Links
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="outgoing-tab" data-bs-toggle="tab" data-bs-target="#outgoing-pane" type="button" role="tab" aria-controls="outgoing-pane" aria-selected="false">
+            Outgoing Links
+          </button>
+        </li>
+      </ul>
 
-      <div class="row">
-        <div class="col-4">
-          <div class="collapse show" id="collapseMandala">
-            <img id="logo" src="/static/logo.png" width="100%"/>
-            {% if backlinks or forwardlinks %}
-              <div id="graph"></div>
-            {% else %}
-              <p>This bindu is not connected to others, so there is no Maṇḍala.</p>
-            {% endif %}
+      <!-- Tab Content -->
+      <div class="tab-content note-tab-content">
+        <!-- Content Tab -->
+        <div class="tab-pane fade show active" id="content-pane" role="tabpanel" aria-labelledby="content-tab">
+          <div class="row">
+            <div class="col-12">
+              <div class="card card-body mb-4">
+                <div class="top-section">
+                  {% if tags %}
+                    {% for tag in tags %}
+                      <a href="{{ url_for('tag_view', tag=tag|urlencode) }}" class="badge bg-secondary text-decoration-none">#{{ tag }}</a>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+                <h1>{{ note_name }}</h1>
 
-            <script type="text/javascript">
-              const rawNodes = {{ graph_nodes | default([]) | tojson | safe }};
-              const rawEdges = {{ graph_edges | default([]) | tojson | safe }};
-              const nodes = new vis.DataSet(
-                rawNodes.map(note_id => ({
-                  id: note_id,
-                  label: note_id,
-                  shape: 'dot',
-                  color: { background: 'white', border: '#af86f4', highlight: { background: '#af86f4', border: '#af86f4' }},
-                  font: { color: '#af86f4', size: 20 }
-                }))
-              );
-              const edges = new vis.DataSet(rawEdges);
-              const container = document.getElementById("graph");
-              const data = { nodes, edges };
-              const options = {
-                layout: { improvedLayout: true, hierarchical: false },
-                physics: { enabled: true, solver: 'forceAtlas2Based', stabilization: { iterations: 100 }},
-                nodes: { shape: 'circle', size: 20 },
-                interaction: { zoomView: false, dragView: false, navigationButtons: false },
-                manipulation: { enabled: false }
-              };
-              const network = new vis.Network(container, data, options);
-              network.on("click", function (params) {
-                if (params.nodes.length > 0) {
-                  const note = params.nodes[0];
-                  window.location.href = "/note/" + note;
-                }
-              });
-            </script>
+                <div id="rendered-content">
+                  {{ content | safe }}
+                </div>
 
-            <h4>🔗 Linked from these bindus</h4>
-            {% if backlinks %}
-              <ul class="list-group mb-4">
-                {% for link in backlinks %}
-                  <li class="list-group-item"><a href="{{ url_for('note', note_name=link) }}">{{ link }}</a></li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p>No bindu link here.</p>
-            {% endif %}
-
-            <h4>🔗 Linked to these bindus</h4>
-            {% if forwardlinks %}
-              <ul class="list-group">
-                {% for link in forwardlinks %}
-                  <li class="list-group-item"><a href="{{ url_for('note', note_name=link) }}">{{ link }}</a></li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p>This bindu does not link to any other bindus.</p>
-            {% endif %}
+                <form id="edit-form" method="POST" action="{{ url_for('save_note', note_name=note_name) }}" style="display:none;">
+                  <textarea name="markdown" class="form-control" rows="20">{{ raw_md }}</textarea>
+                  <button type="submit" class="btn btn-success mt-2">Save</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="col-8">
-          <div class="card card-body mb-4">
-            <div class="top-section">
-              {% if tags %}
-                {% for tag in tags %}
-                  <a href="{{ url_for('tag_view', tag=tag|urlencode) }}" class="badge bg-secondary text-decoration-none">#{{ tag }}</a>
-                {% endfor %}
-              {% endif %}
+        <!-- Mandala Tab -->
+        <div class="tab-pane fade" id="mandala-pane" role="tabpanel" aria-labelledby="mandala-tab">
+          <div class="row">
+            <div class="col-12">
+              <div class="card card-body mandala-container">
+                {% if backlinks or forwardlinks %}
+                  <div id="graph"></div>
+                {% else %}
+                  <div style="text-align: center; padding: 40px;">
+                    <p style="font-size: 1.1rem; opacity: 0.7;">This bindu is not connected to others, so there is no Maṇḍala.</p>
+                  </div>
+                {% endif %}
+              </div>
             </div>
-            <h1>{{ note_name }}</h1>
+          </div>
+        </div>
 
-            <div id="rendered-content">
-              {{ content | safe }}
+        <!-- Incoming Links Tab -->
+        <div class="tab-pane fade" id="incoming-pane" role="tabpanel" aria-labelledby="incoming-tab">
+          <div class="row">
+            <div class="col-12">
+              <div class="card card-body">
+                <h3 style="color: var(--spiritual-blue); margin-bottom: 20px;">← Incoming Links</h3>
+                {% if backlinks %}
+                  <ul class="links-list">
+                    {% for link in backlinks %}
+                      <li><a href="{{ url_for('note', note_name=link) }}">{{ link }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p style="font-size: 1rem; opacity: 0.7;">No bindus link to this one.</p>
+                {% endif %}
+              </div>
             </div>
+          </div>
+        </div>
 
-           <form id="edit-form" method="POST" action="{{ url_for('save_note', note_name=note_name) }}" style="display:none;">
-            <textarea name="markdown" class="form-control" rows="20">{{ raw_md }}</textarea>
-            <button type="submit" class="btn btn-success mt-2">Save</button>
-          </form>
-
+        <!-- Outgoing Links Tab -->
+        <div class="tab-pane fade" id="outgoing-pane" role="tabpanel" aria-labelledby="outgoing-tab">
+          <div class="row">
+            <div class="col-12">
+              <div class="card card-body">
+                <h3 style="color: var(--spiritual-blue); margin-bottom: 20px;">→ Outgoing Links</h3>
+                {% if forwardlinks %}
+                  <ul class="links-list">
+                    {% for link in forwardlinks %}
+                      <li><a href="{{ url_for('note', note_name=link) }}">{{ link }}</a></li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p style="font-size: 1rem; opacity: 0.7;">This bindu does not link to other bindus.</p>
+                {% endif %}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -130,5 +322,53 @@
         editor.style.display = editor.style.display === 'none' ? 'block' : 'none';
       }
     </script>
+
+    <script type="text/javascript">
+      const rawNodes = {{ graph_nodes | default([]) | tojson | safe }};
+      const rawEdges = {{ graph_edges | default([]) | tojson | safe }};
+      const nodes = new vis.DataSet(
+        rawNodes.map(note_id => ({
+          id: note_id,
+          label: note_id,
+          shape: 'dot',
+          color: { background: 'white', border: '#1b4965', highlight: { background: '#1b4965', border: '#1b4965' }},
+          font: { color: '#1b4965', size: 20 }
+        }))
+      );
+      const edges = new vis.DataSet(rawEdges);
+      
+      // Initialize graph when mandala tab is shown
+      const mandalaTab = document.getElementById('mandala-tab');
+      let graphInitialized = false;
+      
+      mandalaTab.addEventListener('shown.bs.tab', function () {
+        if (!graphInitialized) {
+          const container = document.getElementById("graph");
+          if (container) {
+            const data = { nodes, edges };
+            const options = {
+              layout: { improvedLayout: true, hierarchical: false },
+              physics: { enabled: true, solver: 'forceAtlas2Based', stabilization: { iterations: 100 }},
+              nodes: { shape: 'circle', size: 20 },
+              interaction: { zoomView: true, dragView: true, navigationButtons: false },
+              manipulation: { enabled: false }
+            };
+            const network = new vis.Network(container, data, options);
+            network.on("click", function (params) {
+              if (params.nodes.length > 0) {
+                const note = params.nodes[0];
+                window.location.href = "/note/" + note;
+              }
+            });
+            graphInitialized = true;
+          }
+        }
+      });
+    </script>
+
+    <!-- Footer -->
+    <footer style="background: var(--card); border-top: 1px solid var(--border); padding: 30px 20px; margin-top: 60px; text-align: center; color: var(--text); font-size: 0.9rem;">
+      <p>© <a href="https://vimarshafoundation.org/" style="color: var(--text); text-decoration: none; border-bottom: 1px solid var(--text);">Vimarsha Foundation</a>. All rights reserved.</p>
+    </footer>
   </body>
 </html>
