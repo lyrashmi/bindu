@@ -228,6 +228,11 @@
       <!-- Tab Navigation -->
       <ul class="nav nav-tabs note-tabs" role="tablist">
         <li class="nav-item" role="presentation">
+          <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history-pane" type="button" role="tab" aria-controls="history-pane" aria-selected="false">
+            History
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
           <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content-pane" type="button" role="tab" aria-controls="content-pane" aria-selected="true">
             Content
           </button>
@@ -256,6 +261,51 @@
 
       <!-- Tab Content -->
       <div class="tab-content note-tab-content">
+        <!-- History Tab -->
+        <div class="tab-pane fade" id="history-pane" role="tabpanel" aria-labelledby="history-tab">
+          <div class="card card-body">
+            <h4>Change history</h4>
+            {% if history %}
+              <ul class="list-group">
+                {% for c in history %}
+                  <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div>
+                      <strong>{{ c.message }}</strong>
+                      <div><small>by {{ c.author }} on {{ c.date }}</small></div>
+                    </div>
+                    <div class="text-end">
+                      <span class="badge bg-light text-muted" style="font-family:monospace;">{{ c.sha[:7] }}</span>
+                      <button class="btn btn-sm btn-outline-secondary ms-2" data-sha="{{ c.sha }}" onclick="showCommit(this.dataset.sha)">View</button>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p style="opacity:0.7;">No history available.</p>
+            {% endif %}
+          </div>
+        </div>
+    <!-- Commit details modal -->
+    <div class="modal fade" id="commitModal" tabindex="-1" aria-labelledby="commitModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="commitModalLabel">Commit</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="commit-meta" style="margin-bottom:12px; font-size:0.95rem;"></div>
+            <!-- HTML diff will be injected into this container (styled in static/style.css) -->
+            <div id="commit-diff-html" class="diff-container" style="display:none;"></div>
+            <!-- Raw fallback diff (unified) -->
+            <pre id="commit-diff-raw" style="background:#1e1e1e; color:#e6e6e6; padding:12px; overflow:auto; white-space:pre-wrap; word-break:break-word; display:none;"></pre>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
         <!-- Content Tab -->
         <div class="tab-pane fade show active" id="content-pane" role="tabpanel" aria-labelledby="content-tab">
           <div class="row">
@@ -455,6 +505,45 @@
     </script>
 
     <script type="text/javascript">
+      const commitBaseUrl = '/note/{{ note_name|urlencode }}/commit/';
+      function showCommit(sha) {
+        const modal = new bootstrap.Modal(document.getElementById('commitModal'));
+          const metaEl = document.getElementById('commit-meta');
+          const diffHtmlEl = document.getElementById('commit-diff-html');
+          const diffRawEl = document.getElementById('commit-diff-raw');
+          metaEl.innerHTML = 'Loading...';
+          diffHtmlEl.style.display = 'none';
+          diffRawEl.style.display = 'none';
+          diffHtmlEl.innerHTML = '';
+          diffRawEl.textContent = '';
+          fetch(commitBaseUrl + sha, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.json())
+            .then(data => {
+              if (data && data.status === 'ok') {
+                const m = data.meta || {};
+                metaEl.innerHTML = `<div><strong>${m.message}</strong></div><div>by ${m.author} on ${m.date} — <span style="font-family:monospace">${m.sha.slice(0,7)}</span></div>`;
+                if (data.diff_html) {
+                  // show HTML diff in the styled container
+                  diffHtmlEl.innerHTML = data.diff_html;
+                  diffHtmlEl.style.display = 'block';
+                } else {
+                  diffRawEl.textContent = data.diff || '';
+                  diffRawEl.style.display = 'block';
+                }
+                modal.show();
+              } else {
+                metaEl.innerHTML = '<div class="text-danger">Unable to load commit details</div>';
+                diffRawEl.textContent = data && data.message ? data.message : '';
+                diffRawEl.style.display = 'block';
+                modal.show();
+              }
+            }).catch(err => {
+              metaEl.innerHTML = '<div class="text-danger">Error fetching commit</div>';
+              diffRawEl.textContent = String(err);
+              diffRawEl.style.display = 'block';
+              modal.show();
+            });
+      }
       const rawNodes = {{ graph_nodes | default([]) | tojson | safe }};
       const rawEdges = {{ graph_edges | default([]) | tojson | safe }};
       const nodes = new vis.DataSet(

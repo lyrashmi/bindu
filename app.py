@@ -269,6 +269,26 @@ def note(note_name):
     except Exception:
         notes_index_html = ''
 
+    # Collect git history for this note and its entries
+    history = []
+    try:
+        repo_dir = os.path.dirname(__file__)
+        files = [note_file]
+        norm_name = normalize_unicode(note_name)
+        for fname in os.listdir(NOTES_ENTRIES_DIR):
+            if fname.startswith(norm_name + '_'):
+                files.append(os.path.join(NOTES_ENTRIES_DIR, fname))
+        for f in files:
+            cmd = ['git', 'log', '--pretty=format:%H||%an||%ai||%s', '--', _repo_rel(f)]
+            res = subprocess.run(cmd, cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            if res.returncode == 0:
+                for line in res.stdout.splitlines():
+                    parts = line.split('||', 3)
+                    if len(parts) == 4:
+                        sha, author, date, subj = parts
+                        history.append({'sha': sha, 'author': author, 'date': date, 'message': subj})
+    except Exception:
+        history = []
     return render_template('note.html',
                            note_name=note_name,
                            content=content,
@@ -279,7 +299,9 @@ def note(note_name):
                            raw_md=raw_md,
                            graph_edges=edges,
                            github_url=github_url,
-                           notes_index_html=notes_index_html)
+                           notes_index_html=notes_index_html,
+                           history=history)
+
 
 @app.route('/tag/<path:tag>')
 def tag_view(tag):
@@ -364,6 +386,32 @@ def logout():
 @app.route('/notes_entries/<path:filename>')
 def notes_entries_files(filename):
     return send_from_directory(NOTES_ENTRIES_DIR, filename)
+
+
+@app.route('/note/<note_name>/commit/<sha>')
+def note_commit(note_name, sha):
+    """Return JSON with commit metadata and diff for the given sha."""
+    repo_dir = os.path.dirname(__file__)
+    try:
+        # Get commit metadata
+        meta_cmd = ['git', 'show', '--no-patch', '--pretty=format:%H||%an||%ai||%s', sha]
+        meta_res = subprocess.run(meta_cmd, cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if meta_res.returncode != 0:
+            return jsonify({'status': 'error', 'message': 'Commit not found'}), 404
+        parts = meta_res.stdout.strip().split('||', 3)
+        if len(parts) != 4:
+            return jsonify({'status': 'error', 'message': 'Invalid commit format'}), 500
+        commit_sha, author, date, message = parts
+        meta = {'sha': commit_sha, 'author': author, 'date': date, 'message': message}
+
+        # Get diff
+        diff_cmd = ['git', 'show', '--format=', sha]
+        diff_res = subprocess.run(diff_cmd, cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        diff_text = diff_res.stdout if diff_res.returncode == 0 else ''
+
+        return jsonify({'status': 'ok', 'meta': meta, 'diff': diff_text})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
 @app.route('/notes_entries/render/<path:filename>')
