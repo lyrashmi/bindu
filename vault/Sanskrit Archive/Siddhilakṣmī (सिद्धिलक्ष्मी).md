@@ -1,0 +1,1 @@
+Siddhilakshmi is also known as Purnachandi in the Kathmandu Valley - i.e. well-filled and replete [[Ugracaṇḍā (उग्रचण्डा)|Chandi]]. She carries the power of all three [[Guṇa (गुण)]]

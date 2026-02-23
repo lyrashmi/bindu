@@ -1,0 +1,3 @@
+lit. ‘all-pervading, totality’. Comprehended or comprised state. An aggregate which is considered as made up of parts, each of which is consubstantially the same with the whole.
+
+Caṇḍika is considered samaṣṭi by means of being triguṇa (consisting of the three guṇas), it is however important to note that this is not the result of the combined energies of the [[Vyaṣṭi (व्यष्टि)]]; it is instead their source. The earliest commentary on the Devīmāhātmya, describes the supreme Devī as "with and without distinguishing characteristics". In essence, divine reality is both definable and indefinable - at once immanent and trancendent.

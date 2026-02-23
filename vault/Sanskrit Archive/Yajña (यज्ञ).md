@@ -1,0 +1,1 @@
+lit. ‘Sacrifice, worship, offering’. The cosmic sacrifice (yajña) expresses the process of universal metabolism, and the ritual sacrifices (yajñas) are performed with the intention of harmonising and co-operating with the cosmic process. Yajña is the exchange of energies between these different levels.

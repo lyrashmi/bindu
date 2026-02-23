@@ -1,0 +1,3 @@
+Can be translated as non-expression, non-manifestation, or lack of clarity. In the context of the **Samkhya** philosophy, Avivekti is associated with the unmanifest (avyakta) state of Prakriti (primordial nature). Prakriti in its unmanifest form holds all potentialities, but these are not yet differentiated or expressed. This contrasts with the manifest (vyakta) world, where these potentialities take form. In **knowledge** Avivekti can signify a lack of clear discernment or understanding, often caused by ignorance (avidya).
+
+see also: [[Viveka (विवेक)]]

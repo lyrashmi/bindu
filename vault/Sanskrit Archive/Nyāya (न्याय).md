@@ -1,0 +1,3 @@
+is one of the six classical schools (_ṣaḍdarśana_) of Indian philosophy. The term means **"rule," "method," or "logic"**, and the Nyāya school is primarily concerned with **epistemology** and **logic** — how we know what we know.
+
+See also: [[Kiśora-nyāya (किशोर न्याय)]], see also [[Anubhava (अनुभव)]], [[Yukti (युक्ति)]], [[Vāda (वाद)]], [[Viveka (विवेक)]], [[Pramāṇa (प्रमाण)]], [[Tarka (तर्क)]], [[Vyāpti (व्याप्ति)]]

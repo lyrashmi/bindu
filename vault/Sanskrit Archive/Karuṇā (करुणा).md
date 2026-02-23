@@ -1,0 +1,1 @@
+Refers to compassion or empathy. Many Hindu deities are considered embodiments of compassion in their “Karuna form.”

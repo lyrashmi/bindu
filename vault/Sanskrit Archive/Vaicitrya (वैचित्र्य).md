@@ -1,0 +1,1 @@
+(lit. ‘diversity, variety, uniqueness’; conviction of all the conditioning factors), this is when you have the imposition of the self onto others - and others suffering becomes your suffering.

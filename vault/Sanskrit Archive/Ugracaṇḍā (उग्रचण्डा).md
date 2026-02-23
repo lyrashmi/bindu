@@ -1,0 +1,26 @@
+The most furious form of Caṇḍika. She is identified as the [[Mahiṣāsuramardinī (महिषासुरमर्दिनी)]] (the slayer of the āsura Mahiṣ) from the [[Devīmahātmyam (देवीमहात्म्य)]]. The mantra *Oṃ namaścaṇḍikāyai* invokes her in her supreme [[Samaṣṭi (समष्टि)]] form. [[Cāmuṇḍā (चामुण्डा)]] is her power (Śakti), who is one of the [[Aśtamātṝkā (अष्टमातृका)]].
+
+![[IMG_7762.jpeg]]
+<font size=2>fig. 1: *Her immanent concretisation as worshipped in the Palanchowk temple in Kavrepalanchok district, Nepal. For us this our primary [[Dhyāna (ध्यान)|dhyānam]].*</font>
+
+Her three main projections are [[Mahākālī (महाकाली)]] (who’s [[Bīja (बीज)]] is Klīṃ), [[Mahālakṣmi (महालक्ष्मी)]] (who’s bīja is Hrīṃ) and [[Mahāsarasvatī (महासरस्वती)]] (who’s bīja is Aiṃ) (see: fig. 2). These three immensely more powerful trancendent aspects of Kālī, Lakṣmi and Sarasvatī represent the universal energies ([[Vyaṣṭi (व्यष्टि)]]) as the three [[Guṇa (गुण)]]: tamas (inertia), rajas (dynamism) and sattvas (luminosity) respectively. In the phenomenal universe, they underlie all the subsequent activities of creation ([[Krama (क्रम)|sṛṣṭi]]), sustenance ([[Krama (क्रम)|sthiti]]), and dissolution ([[Krama (क्रम)|saṃhāra]]). Together they make [[Krama (क्रम)|anākhya]]. 
+![[IMG_6379.jpeg]]
+<font size=2>fig. 2: *From left to right: Mahākālī, Mahālakṣmi, Mahāsarasvatī*</font>
+
+It is also important to note that in the Vaiṣṇava context the name Mahālakṣmi denotes the Devi's samaṣṭi form and not merely her purely rajasic vyaṣṭi form, which leads to confusion in nomenclature. This is because the Rahasyas (since they are Vaiṣṇava tantric texts) view both the unmanifest Mahākālī and Mahāsarasvatī as proceeding from - not coequal with - the unmanifest Mahālakṣmi, which they contend wields all three guṇas.
+
+At the early stage of differentiation, the pure gunas are still unmanifest (avyākṛta) as causal energies. Though indescribable, they are conceived of as the three goddesses’ four-armed forms. Through subsequent modification (vikṛti), these in turn become manifest forms with the same names. It is these that are described in the dhyānas (see: [[Dhyāna (ध्यान)]]) as the ten-armed Mahākālī, the eighteen-armed Mahālakṣmi and the eight-armed Mahāsarasvatī. Mahasarasvati manifests as Vaagbhava, the essence of divine speech (the seed [[Vāk (वाक्)|mantra]], the phoneme). Sadrupa (having the nature of truth, or true form) as Sat (pure being) as Mahalakshmi, she herself expresses further in the form of bliss (ananda) in the form of Mahakali.
+
+The creation of the universe is in fact a transition from potentiality into actuality. This truth is inherent even in the Sanskrit word for creation (as opposed to dṛṣṭi, which means perception): sṛṣṭi (see: [[Krama (क्रम)]]) which literally means "emission" or "letting loose" from a latent to a manifest state (see: [[Visarga (विसर्ग)|visarga]]). In the birth of Mahishasuramardini we see that the periphery constitutes the centre. The goddess manifests into vyasti ([[Bhūpura (भूम्पुर)|bhūpura]]) and retrieves back into samashti ([[Bindu (बिन्दु)]]). 
+
+The advaita doctrine of dṛṣṭisṛṣṭi (seeing as identical with creation) emphasises the inseparability of these two paradigms.
+
+9 is the ultimate high number (also navarna mantra has 9 phonemes), so why 18 arms? Because of Shiva and Shakti, 9 for each. There are 9 durgas ([[Navadurgāḥ (नवदुर्गाः)]]). 9 nights ([[Navarātri (नवरात्रि)]]) for her worship ([[Upāsanā (उपासना)|upāsanā]]). And 9 emanations of the [[Guṇa (गुण)|gunas]]. Originally the nine-fold structure came from [[Kubjikā (कुब्जिका)|Kubjikā]] as Navanityas, (the nine [[Nitya (नित्य)|nityas]]).
+
+Mahakali is the mistress of ishana amnaya (north-east, Śiva), mahalakshmi is governing the āgneya amnaya (south-east, agni), Mahasarasvati governing naiyitya amnaya (south-west, Nirrti) - (see also: [[Daśadikpāla (दशदिक्पाल)]]). Their collective is called Samasthi, united in the vāyavya amnaya (north-west, Vayu). Even that amnaya is transcending all the amnayas and is manifesting in the singular form of chamunda, inside the ajna (third eye) chakra. Inside the ajna chakra in visualisation there is the “Lalana” chakra. And this chakra is visualised having 64 petals, Chamunda presides over there as the Samasthi of all amnayas.
+
+Worshipping Chandi on Navaratri is both nitya and kāmya (optional desire driven actions, not always negative). It depends on wether you’re initiated or not. As a sadhaka without worshipping Chandi there is no higher progression, hence it is mandatory.
+___
+That which rests on the Consuming of Time ([[Kālagrāsa (कालग्रास)|kāla-grāsa]]-viśrāntiḥ) is the Nature of the [[Śiva (शिव)|Supreme Lord]] (rūpam parama-īśituḥ). Though that in which this resting rests (viśrānti-viśrāntiḥ) is said to be the Nature of the Goddess (devī-rūpam). || Mahānayaprakāśaḥ, 3/110 || 
+___
+See also: [[Maha (मह)]], [[Amṛta (अमृत)]], [[Kubjikā (कुब्जिका)]], [[Śraddhā (श्रद्धा)]], [[Karma (कर्म)]], [[Prāṇa (प्राण)]], [[Kula (कुल)]], [[Vimarśa (विमर्श)]], [[Puryaṣṭaka (पुर्यष्टक)]]

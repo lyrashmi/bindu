@@ -1,0 +1,3 @@
+Saṃvartāmaṇḍala refers to the “Circle of the Fire of the Aeons” identified with Candradvīpa (the island of the moon). Saṃvarta (more commonly in these sources the feminine—_saṃvartā_) is the fire that burns within the Cosmic Ocean in which the universe floats and imparts to it the energy that sustains it. Thus, the energy in the centre of the Circle of the Fire of the Aeons (_saṃvartāmaṇḍala_), the main maṇḍala of the [[Kubjikā (कुब्जिका)|Kubjikā]] Tantras, is said to consume the Ocean of Kula.
+
+The 14 Kālīs of the saṃvartāmaṇḍala might be identified with the 14 heads in some versions of [[Guhyakālī (गुह्यकाली)|Guhyakālī]].

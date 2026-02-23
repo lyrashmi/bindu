@@ -1,0 +1,1 @@
+A genre of Sanskrit literature. Also refers to any metrical verse or line which explains, in an aphoristic manner, some key idea ([[Sūtra (सूत्र)]]).

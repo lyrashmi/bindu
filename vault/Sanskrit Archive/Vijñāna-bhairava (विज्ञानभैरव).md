@@ -1,0 +1,1 @@
+An essential text in the Trika-Kaula tradition of Kashmir Shaivism. Contains practical information about meditation. It presents itself as the [[Svabhāva (स्वभाव)]] (essence) of the much longer Rudrayamala-tantra, which has now long been lost.

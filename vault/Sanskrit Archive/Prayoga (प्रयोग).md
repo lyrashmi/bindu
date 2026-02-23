@@ -1,0 +1,1 @@
+Applications, practice, experiment (there are 700); there are also 700 seed syllables which correlate to the 700 mantras of the devimahatmya (which are also considered to be saptashati). These 700 bijas are transmitted orally and are kept secret.

@@ -1,0 +1,1 @@
+rules of debate in Nyāya. One key principle of it is that valid reasoning must be grounded in evidence mutually accessible and acceptable to both parties.

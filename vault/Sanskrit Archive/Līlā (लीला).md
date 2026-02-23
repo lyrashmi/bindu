@@ -1,0 +1,2 @@
+lit. ‘Pastime, play’. 
+Divine play, the inherent nature of the divine and the will ([[Icchā (इच्छा)]]) to express and unfold leading to the unfolding ([[Unmeṣa-Nimeṣa (उन्मेष-निमेष)]]) of the limited world ([[Jagad (जगत्)]]).

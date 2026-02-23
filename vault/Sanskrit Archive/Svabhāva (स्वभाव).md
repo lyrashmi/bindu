@@ -1,0 +1,1 @@
+one’s own true nature, innate disposition, intrinsic essence.

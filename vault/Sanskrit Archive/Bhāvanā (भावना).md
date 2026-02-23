@@ -1,0 +1,3 @@
+A strong visualisation, a strong intentionality. The gods are speech, they are abstract energies - by your wish, your heart and desire you create the form for the gods to be swept (encased) into your visualised form. Just like you need this body and for this body you need food, the deities also need food (sometimes corporeal food, physical food becomes a metaphor) - the food for the gods is shraddhā, i.e. your own shraddhā is what constitutes food for the gods to be, so that you can actually directly encounter. That allows the abstract entities to materialise. 
+
+See also: [[Pūjā (पूजा)]], [[Upāsanā (उपासना)]]

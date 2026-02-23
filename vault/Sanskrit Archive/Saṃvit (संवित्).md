@@ -1,0 +1,1 @@
+“awareness-reality” itself is succession or [[Krama (क्रम)]]. Whether it is a process of empirical cognition or that of reflective meditation or cosmic emanation, it is _saṃvit_ that defines and undergoes the process of succession (_krama_). This process of succession is also termed Mahākrama.

@@ -1,0 +1,1 @@
+literally means _“twilight language”_ — a symbolic, coded, or intentionally ambiguous mode of expression, often used in **Tantric** texts and teachings. **deliberately veiled language**, intelligible only through **initiation (dīkṣā)** and **direct experience ([[Anubhava (अनुभव)]]**).

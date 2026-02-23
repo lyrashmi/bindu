@@ -1,0 +1,1 @@
+The outer path. The rule of no rules. Mārga being path.

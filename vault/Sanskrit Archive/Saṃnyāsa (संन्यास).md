@@ -1,0 +1,1 @@
+Derived from **"Sam" (सम्)** = "complete" + **"Nyāsa" (न्यास)** = "abandonment, laying down. Refers to renunciation, or asceticism.
