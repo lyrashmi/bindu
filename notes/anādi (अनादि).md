@@ -1,0 +1,2 @@
+# Notes for anādi (अनादि)
+

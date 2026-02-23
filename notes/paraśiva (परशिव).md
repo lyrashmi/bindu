@@ -1,0 +1,2 @@
+# Notes for paraśiva (परशिव)
+

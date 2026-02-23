@@ -1,0 +1,2 @@
+# Notes for kūṭa (कूट)
+

@@ -1,0 +1,2 @@
+# Notes for pīṭha (पीठ)
+

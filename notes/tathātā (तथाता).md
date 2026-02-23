@@ -1,0 +1,2 @@
+# Notes for tathātā (तथाता)
+
