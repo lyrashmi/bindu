@@ -273,8 +273,8 @@
 
       // Initialize featured and all concepts on page load
       function initializePage() {
-        // Show featured concepts (first 8)
-        const featured = allNotes.slice(0, 8);
+        // Show featured concepts (specific selection)
+        const featured = ['ugracaṇḍā (उग्रचण्डा)', 'deities', 'visarga (विसर्ग)', 'devīmahātmyam (देवीमहात्म्य)'];
         displayConcepts(featured, featuredGrid);
 
         // Show all concepts
