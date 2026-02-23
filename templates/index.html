@@ -135,6 +135,16 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
+      .mandala-card.orphan {
+        background: rgba(255, 200, 200, 0.3);
+        border-color: rgba(200, 100, 100, 0.4);
+      }
+
+      [data-theme='dark'] .mandala-card.orphan {
+        background: rgba(150, 50, 50, 0.25);
+        border-color: rgba(200, 100, 100, 0.4);
+      }
+
       .mandala-title {
         font-size: 1.1rem;
         font-weight: 500;
@@ -221,6 +231,9 @@
           <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createBinduModal" style="border-radius: 20px; padding: 8px 24px;">
             + Create Bindu
           </button>
+          <a href="{{ url_for('admin_settings') }}" class="btn btn-outline-secondary" style="border-radius: 20px; padding: 8px 24px; margin-left: 10px;">
+            <i class="fas fa-cog"></i> Settings
+          </a>
         </div>
         {% endif %}
       </div>
@@ -262,6 +275,7 @@
     <!-- Autocomplete Script -->
     <script>
       const allNotes = {{ notes_json | safe }};
+      const orphanBindus = {{ orphan_bindus_json | safe }};
       const searchInput = document.getElementById("searchInput");
       const autocompleteList = document.getElementById("autocompleteList");
       const resultsContainer = document.getElementById("resultsContainer");
@@ -292,6 +306,11 @@
       function createConceptCard(noteName) {
         const card = document.createElement('div');
         card.className = 'mandala-card';
+        
+        // Highlight orphan bindus (no links) for admins
+        if (orphanBindus && orphanBindus.includes(noteName)) {
+          card.classList.add('orphan');
+        }
 
         card.innerHTML = `
           <div class="mandala-title">${noteName}</div>

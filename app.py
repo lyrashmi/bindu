@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, abort, url_for, send_from_directory, redirect, session, flash, jsonify
 from markupsafe import Markup
+from urllib.parse import quote as url_quote
 import markdown
 import os
 import re
@@ -15,9 +16,39 @@ app.secret_key = 'changeme'  # TODO: set a secure secret in production
 VAULT_DIR = os.path.join(os.path.dirname(__file__), 'vault')
 DB_PATH = os.path.join(os.path.dirname(__file__), 'vault_index.json')
 USERS_DB_PATH = os.path.join(os.path.dirname(__file__), 'users.json')
+SETTINGS_PATH = os.path.join(os.path.dirname(__file__), 'settings.json')
 NOTES_DIR = os.path.join(os.path.dirname(__file__), 'notes')
 NOTES_ENTRIES_DIR = os.path.join(os.path.dirname(__file__), 'notes_entries')
 INDEX_UPDATE_INTERVAL = 60  # seconds
+
+# Default settings
+DEFAULT_SETTINGS = {
+    "accepting_registrations": False,
+    "private_tag_enabled": True,
+    "all_private": False
+}
+
+def get_settings():
+    """Load settings from settings.json, creating with defaults if not exists."""
+    if not os.path.exists(SETTINGS_PATH):
+        with open(SETTINGS_PATH, 'w', encoding='utf-8') as f:
+            json.dump(DEFAULT_SETTINGS, f, indent=2)
+        return DEFAULT_SETTINGS.copy()
+    try:
+        with open(SETTINGS_PATH, encoding='utf-8') as f:
+            settings = json.load(f)
+        # Ensure all keys exist
+        for key, val in DEFAULT_SETTINGS.items():
+            if key not in settings:
+                settings[key] = val
+        return settings
+    except Exception:
+        return DEFAULT_SETTINGS.copy()
+
+def save_settings(settings):
+    """Save settings to settings.json."""
+    with open(SETTINGS_PATH, 'w', encoding='utf-8') as f:
+        json.dump(settings, f, indent=2)
 
 # Global variables to hold vault data
 note_map = {}       # note identifier (normalized lowercase) -> full path to .md file
@@ -62,7 +93,9 @@ def parse_links(content):
             img_url = '/vault/' + rel_path
             return f'<img src="{img_url}" alt="{display}" style="max-width: 100%; height: auto;" />'
         else:
-            return f'<a href="/bindu/{norm_target}">{display}</a>'
+            # URL-encode the target to handle special characters
+            encoded_target = url_quote(norm_target, safe='')
+            return f'<a href="/bindu/{encoded_target}">{display}</a>'
 
     return re.sub(r'(!)?\[\[([^\]]+)\]\]', replacer, content)
 
@@ -88,9 +121,10 @@ def get_note_content(note_name):
     with open(note_file, encoding='utf-8') as f:
         md_content = f.read()
 
-    # Check for #private tag; if present and user is not logged in, return private page content
-    if re.search(r'(?<!\w)#private(?!\w)', md_content) and 'username' not in session:
-        # Load the private.md file instead
+    settings = get_settings()
+    
+    # Check all_private mode - if enabled and user not logged in, show private page
+    if settings.get('all_private', False) and 'username' not in session:
         private_file = os.path.join(os.path.dirname(__file__), 'text', 'private.md')
         try:
             with open(private_file, encoding='utf-8') as f:
@@ -99,6 +133,18 @@ def get_note_content(note_name):
             return html, [], []
         except FileNotFoundError:
             abort(404)
+
+    # Check for #private tag; if enabled, present, and user not logged in, return private page content
+    if settings.get('private_tag_enabled', True):
+        if re.search(r'(?<!\w)#private(?!\w)', md_content) and 'username' not in session:
+            private_file = os.path.join(os.path.dirname(__file__), 'text', 'private.md')
+            try:
+                with open(private_file, encoding='utf-8') as f:
+                    md_content = f.read()
+                html = render_markdown(md_content)
+                return html, [], []
+            except FileNotFoundError:
+                abort(404)
 
     md_content = parse_links(md_content)
     md_content = parse_tags_links(md_content)
@@ -150,16 +196,17 @@ def update_vault_index():
 
                     # Find [[links]] excluding image markdown: ![alt](file)
                     links = re.findall(r'\[\[([^\]]+)\]\]', content)
-                    temp_link_graph[identifier] = [
-                        normalize_unicode(link.strip())
+                    # Deduplicate: same target linked multiple times with different display text
+                    temp_link_graph[identifier] = list(set(
+                        normalize_unicode(link.split('|')[0].strip())
                         for link in links
-                        if not re.search(r'\.(png|jpe?g|gif|webp|svg)$', link, re.IGNORECASE)
-                    ]
+                        if not re.search(r'\.(png|jpe?g|gif|webp|svg)$', link.split('|')[0], re.IGNORECASE)
+                    ))
 
         temp_backlinks_map = {k: [] for k in temp_note_map}
         for src, targets in temp_link_graph.items():
             for tgt in targets:
-                if tgt in temp_backlinks_map:
+                if tgt in temp_backlinks_map and src not in temp_backlinks_map[tgt]:
                     temp_backlinks_map[tgt].append(src)
 
         note_map = temp_note_map
@@ -194,9 +241,25 @@ def update_vault_index():
 
 @app.route('/')
 def index():
+    settings = get_settings()
+    # If all_private is enabled and user not logged in, redirect to login
+    if settings.get('all_private', False) and 'username' not in session:
+        return redirect(url_for('login', next=request.path))
+    
     notes = sorted(note_map.keys())
     notes_json = json.dumps(notes)
-    return render_template('index.html', notes=notes, notes_json=notes_json)
+    
+    # Compute orphan bindus (no backlinks AND no forward links) for admin view
+    orphan_bindus = []
+    if session.get('role') == 'admin':
+        for note in notes:
+            has_backlinks = len(backlinks_map.get(note, [])) > 0
+            has_forwardlinks = len(link_graph.get(note, [])) > 0
+            if not has_backlinks and not has_forwardlinks:
+                orphan_bindus.append(note)
+    orphan_bindus_json = json.dumps(orphan_bindus)
+    
+    return render_template('index.html', notes=notes, notes_json=notes_json, orphan_bindus_json=orphan_bindus_json)
 
 def extract_tags_from_content(content):
     return re.findall(r'(?<!\w)#([\w/-]+)', content)
@@ -228,11 +291,17 @@ def bindu(bindu_name):
     with open(note_file, encoding='utf-8') as f:
         raw_md = f.read()
 
-    # Check if private before extracting tags
+    settings = get_settings()
+    
+    # Check all_private mode first
+    all_private_block = settings.get('all_private', False) and 'username' not in session
+    
+    # Check if private tag applies
     is_private = bool(re.search(r'(?<!\w)#private(?!\w)', raw_md))
+    private_tag_block = settings.get('private_tag_enabled', True) and is_private and 'username' not in session
 
-    # If private and user not logged in, show the special private page; otherwise render real content
-    if is_private and 'username' not in session:
+    # If blocked by all_private or private tag, show the special private page
+    if all_private_block or private_tag_block:
         private_file = os.path.join(os.path.dirname(__file__), 'text', 'private.md')
         try:
             with open(private_file, encoding='utf-8') as pf:
@@ -387,6 +456,85 @@ def logout():
     session.pop('role', None)
     flash('Logged out', 'info')
     return redirect(url_for('index'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    settings = get_settings()
+    # Only allow registration if accepting_registrations is enabled
+    if not settings.get('accepting_registrations', False):
+        flash('Registration is currently closed.', 'warning')
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '').strip()
+        email = request.form.get('email', '').strip()
+        
+        # Basic validation
+        if not username or not password or not email:
+            flash('All fields are required.', 'danger')
+            return render_template('register.html')
+        
+        if len(username) < 3:
+            flash('Username must be at least 3 characters.', 'danger')
+            return render_template('register.html')
+        
+        if len(password) < 6:
+            flash('Password must be at least 6 characters.', 'danger')
+            return render_template('register.html')
+        
+        # Check if username already exists
+        try:
+            with open(USERS_DB_PATH, encoding='utf-8') as f:
+                users_db = json.load(f)
+        except Exception:
+            users_db = {"users": []}
+        
+        if any(u.get('username') == username for u in users_db.get('users', [])):
+            flash('Username already exists.', 'danger')
+            return render_template('register.html')
+        
+        # Add new user with student role
+        new_user = {
+            "username": username,
+            "password": password,
+            "email": email,
+            "role": "student"
+        }
+        users_db['users'].append(new_user)
+        
+        with open(USERS_DB_PATH, 'w', encoding='utf-8') as f:
+            json.dump(users_db, f, indent=2)
+        
+        flash('Registration successful! You can now log in.', 'success')
+        return redirect(url_for('login'))
+    
+    return render_template('register.html')
+
+
+@app.route('/admin/settings', methods=['GET', 'POST'])
+def admin_settings():
+    # Only admins can access
+    if session.get('role') != 'admin':
+        flash('Access denied.', 'danger')
+        return redirect(url_for('index'))
+    
+    settings = get_settings()
+    
+    if request.method == 'POST':
+        # Update settings from form
+        settings['accepting_registrations'] = 'accepting_registrations' in request.form
+        settings['private_tag_enabled'] = 'private_tag_enabled' in request.form
+        settings['all_private'] = 'all_private' in request.form
+        save_settings(settings)
+        flash('Settings saved successfully.', 'success')
+        return redirect(url_for('admin_settings'))
+    
+    # Generate registration URL for copying
+    registration_url = url_for('register', _external=True)
+    
+    return render_template('admin_settings.html', settings=settings, registration_url=registration_url)
 
 
 @app.route('/notes_entries/<path:filename>')
