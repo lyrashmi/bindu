@@ -1,1 +1,0 @@
-- [test](/notes_entries/buddhi (बुद्धि)_diego_1771775838_test.md) by diego on Sun Feb 22 16:57:18 2026
