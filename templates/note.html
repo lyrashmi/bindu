@@ -62,9 +62,30 @@
 
       .logo-container img {
         max-width: 300px;
+        width: 100%;
         height: auto;
         margin: 0 auto;
         transition: opacity 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .logo-container {
+          padding: 15px 10px;
+          margin-bottom: 15px;
+        }
+        .logo-container img {
+          max-width: 200px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo-container {
+          padding: 10px 8px;
+          margin-bottom: 10px;
+        }
+        .logo-container img {
+          max-width: 150px;
+        }
       }
 
       .logo-container .logo-light {
@@ -216,6 +237,105 @@
       .link-autocomplete-item.highlighted {
         background: var(--spiritual-blue);
         color: #fff;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .logo-container {
+          width: 100px;
+          height: 100px;
+          top: 10px;
+          right: 10px;
+        }
+
+        .back-button {
+          width: 40px;
+          height: 40px;
+          top: 15px;
+          left: 15px;
+          font-size: 1.1rem;
+        }
+
+        .container-fluid {
+          padding-top: 60px;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .note-tabs .nav-link {
+          padding: 10px 12px;
+          font-size: 0.9rem;
+        }
+
+        .note-tabs {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .mandala-container {
+          min-height: 350px;
+        }
+
+        #graph {
+          height: 350px;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo-container {
+          width: 70px;
+          height: 70px;
+          top: 8px;
+          right: 8px;
+        }
+
+        .back-button {
+          width: 36px;
+          height: 36px;
+          top: 12px;
+          left: 12px;
+          font-size: 1rem;
+        }
+
+        .container-fluid {
+          padding-top: 50px;
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+
+        .note-tabs .nav-link {
+          padding: 8px 10px;
+          font-size: 0.85rem;
+        }
+
+        .mandala-container {
+          min-height: 280px;
+        }
+
+        #graph {
+          height: 280px;
+        }
+
+        h1 {
+          font-size: 1.3rem;
+        }
+
+        h2 {
+          font-size: 1.15rem;
+        }
+
+        .links-list a {
+          font-size: 0.9rem;
+        }
       }
     </style>
 

@@ -6,6 +6,68 @@
     <title>User: {{ username }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <style>
+      .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--sand);
+        border: 2px solid var(--spiritual-blue);
+        color: var(--spiritual-blue);
+        font-size: 1.3rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(27, 73, 101, 0.2);
+        z-index: 1000;
+        text-decoration: none;
+      }
+
+      @media (max-width: 768px) {
+        .back-button {
+          width: 40px;
+          height: 40px;
+          top: 15px;
+          left: 15px;
+          font-size: 1.1rem;
+        }
+
+        .container {
+          padding-top: 60px !important;
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .back-button {
+          width: 36px;
+          height: 36px;
+          top: 12px;
+          left: 12px;
+          font-size: 1rem;
+        }
+
+        .container {
+          padding-top: 50px !important;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        h1 {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="container" style="padding-top:80px; max-width:900px;">

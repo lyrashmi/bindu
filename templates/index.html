@@ -16,9 +16,30 @@
 
       .logo-container img {
         max-width: 400px;
+        width: 100%;
         height: auto;
         margin: 0 auto;
         transition: opacity 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .logo-container {
+          padding: 20px 15px 15px;
+          margin-bottom: 20px;
+        }
+        .logo-container img {
+          max-width: 250px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo-container {
+          padding: 15px 10px 10px;
+          margin-bottom: 15px;
+        }
+        .logo-container img {
+          max-width: 180px;
+        }
       }
 
       .logo-container .logo-light {
@@ -48,10 +69,43 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       }
 
+      @media (max-width: 768px) {
+        .mandala-intro {
+          margin: 20px 10px;
+          padding: 20px;
+          font-size: 0.95rem;
+          line-height: 1.7;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .mandala-intro {
+          margin: 15px 5px;
+          padding: 15px;
+          font-size: 0.9rem;
+          border-left-width: 3px;
+        }
+      }
+
       .search-container {
         max-width: 600px;
         margin: 40px auto;
         position: relative;
+        padding: 0 15px;
+      }
+
+      @media (max-width: 768px) {
+        .search-container {
+          margin: 30px auto;
+          padding: 0 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .search-container {
+          margin: 25px auto;
+          padding: 0 5px;
+        }
       }
 
       .search-input {
@@ -117,6 +171,22 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
         margin-top: 40px;
+      }
+
+      @media (max-width: 768px) {
+        .mandala-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          margin-top: 25px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .mandala-grid {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          margin-top: 20px;
+        }
       }
 
       .mandala-card {
@@ -191,6 +261,57 @@
         box-shadow: none;
         z-index: 1001;
         padding: 0;
+      }
+
+      .login-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 10px 12px;
+        border: 2px solid var(--text);
+        background: transparent;
+        color: var(--text);
+        text-decoration: none;
+        z-index: 1010;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+      }
+
+      /* Responsive for theme-toggle and login-button */
+      @media (max-width: 768px) {
+        .theme-toggle {
+          width: 40px;
+          height: 40px;
+          top: 12px;
+          right: 12px;
+          font-size: 1.1rem;
+        }
+
+        .login-button {
+          top: 12px;
+          right: 12px;
+          padding: 8px 10px;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .theme-toggle {
+          width: 36px;
+          height: 36px;
+          top: 10px;
+          right: 10px;
+          font-size: 1rem;
+        }
+
+        .login-button {
+          top: 10px;
+          right: 10px;
+          padding: 6px 8px;
+          font-size: 0.8rem;
+        }
       }
     </style>
   </head>

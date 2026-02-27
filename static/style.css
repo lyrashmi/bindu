@@ -271,3 +271,401 @@ blockquote {
   background-color: var(--card);
 }
 
+/* ========================================
+   RESPONSIVE STYLES
+   ======================================== */
+
+/* Tablet and smaller (max-width: 992px) */
+@media (max-width: 992px) {
+  .container {
+    max-width: 100%;
+    padding: 0.75rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    padding: 20px;
+    margin: 15px 0;
+  }
+
+  /* Login button adjustments */
+  .login-button {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .container {
+    padding: 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    padding-bottom: 0.4rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+  }
+
+  .card {
+    padding: 15px;
+    margin: 10px 0;
+    border-left-width: 3px;
+  }
+
+  /* Fixed buttons - smaller and repositioned */
+  .back-button,
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    top: 12px;
+  }
+
+  .back-button {
+    left: 12px;
+  }
+
+  .theme-toggle {
+    right: 12px;
+  }
+
+  .login-button {
+    top: 12px;
+    right: 12px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  /* Logo container - responsive sizing */
+  .logo-container {
+    padding: 15px 10px;
+    margin-bottom: 15px;
+  }
+
+  .logo-container img {
+    max-width: 200px;
+  }
+
+  /* Search input */
+  .search-input {
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+
+  /* Mandala grid - 2 columns on mobile */
+  .mandala-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .mandala-card {
+    padding: 18px 12px;
+  }
+
+  .mandala-title {
+    font-size: 0.95rem;
+  }
+
+  /* Section titles */
+  .section-title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  /* Featured section */
+  .featured-section {
+    margin-top: 40px;
+    padding: 25px 15px;
+  }
+
+  /* Mandala intro */
+  .mandala-intro {
+    padding: 20px;
+    font-size: 0.95rem;
+    margin: 20px auto;
+  }
+
+  /* Tabs - scrollable on mobile */
+  .nav-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  /* Note tabs */
+  .note-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .note-tabs .nav-link {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  /* Graph container */
+  #graph {
+    height: 300px;
+  }
+
+  /* Links list */
+  .links-list li {
+    padding: 10px 0;
+  }
+
+  .links-list a {
+    font-size: 0.95rem;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  /* Pre/code blocks */
+  pre {
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+
+  /* Modal adjustments */
+  .modal-dialog {
+    margin: 10px;
+  }
+
+  .modal-body {
+    padding: 15px;
+  }
+
+  .modal-body textarea {
+    font-size: 0.9rem;
+  }
+
+  /* List group items */
+  .list-group-item {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  /* Buttons */
+  button, .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* Badges */
+  .badge {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  /* Container fluid - less top padding */
+  .container-fluid {
+    padding-top: 60px;
+  }
+}
+
+/* Small mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+  }
+
+  .container {
+    padding: 0.4rem;
+  }
+
+  .card {
+    padding: 12px;
+    margin: 8px 0;
+  }
+
+  /* Mandala grid - single column on very small screens */
+  .mandala-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Logo even smaller */
+  .logo-container img {
+    max-width: 160px;
+  }
+
+  /* Fixed buttons - even smaller */
+  .back-button,
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    top: 10px;
+  }
+
+  .back-button {
+    left: 10px;
+  }
+
+  .login-button {
+    top: 10px;
+    right: 10px;
+    padding: 5px 8px;
+    font-size: 0.8rem;
+  }
+
+  /* Search container */
+  .search-container {
+    margin: 25px auto;
+  }
+
+  .search-input {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  /* Section titles */
+  .section-title {
+    font-size: 1.2rem;
+  }
+
+  /* Featured section */
+  .featured-section {
+    margin-top: 30px;
+    padding: 20px 10px;
+    border-left-width: 3px;
+  }
+
+  /* Mandala intro */
+  .mandala-intro {
+    padding: 15px;
+    font-size: 0.9rem;
+    border-left-width: 3px;
+  }
+
+  /* Tabs */
+  .nav-tabs .nav-link {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .note-tabs .nav-link {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  /* Graph */
+  #graph {
+    height: 250px;
+  }
+
+  /* Modal */
+  .modal-dialog {
+    margin: 5px;
+  }
+
+  .modal-header,
+  .modal-footer {
+    padding: 10px 15px;
+  }
+
+  .modal-title {
+    font-size: 1.1rem;
+  }
+
+  /* Autocomplete */
+  .autocomplete-item {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  /* Container fluid */
+  .container-fluid {
+    padding-top: 55px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Orientation: Landscape on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .logo-container {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .logo-container img {
+    max-width: 150px;
+  }
+
+  .container-fluid {
+    padding-top: 50px;
+  }
+
+  #graph {
+    height: 200px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .back-button,
+  .theme-toggle,
+  .login-button,
+  .nav-tabs,
+  .btn {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+}
+

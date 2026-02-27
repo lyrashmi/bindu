@@ -191,6 +191,115 @@
 
       /* difflib HtmlDiff table styling moved to `static/style.css` for consistent theming */
       /* See .diff-container and table.diff rules in static/style.css */
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .logo-container img {
+          max-width: 200px;
+        }
+
+        .back-button {
+          width: 40px;
+          height: 40px;
+          top: 15px;
+          left: 15px;
+          font-size: 1.1rem;
+        }
+
+        .theme-toggle {
+          width: 40px;
+          height: 40px;
+          top: 15px;
+          right: 15px;
+          font-size: 1.1rem;
+        }
+
+        .container-fluid {
+          padding-top: 60px;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .note-tabs .nav-link {
+          padding: 10px 12px;
+          font-size: 0.9rem;
+        }
+
+        .note-tabs {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .mandala-container {
+          min-height: 350px;
+        }
+
+        #graph {
+          height: 350px;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo-container img {
+          max-width: 150px;
+        }
+
+        .back-button {
+          width: 36px;
+          height: 36px;
+          top: 12px;
+          left: 12px;
+          font-size: 1rem;
+        }
+
+        .theme-toggle {
+          width: 36px;
+          height: 36px;
+          top: 12px;
+          right: 12px;
+          font-size: 1rem;
+        }
+
+        .container-fluid {
+          padding-top: 50px;
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+
+        .note-tabs .nav-link {
+          padding: 8px 10px;
+          font-size: 0.85rem;
+        }
+
+        .mandala-container {
+          min-height: 280px;
+        }
+
+        #graph {
+          height: 280px;
+        }
+
+        h1 {
+          font-size: 1.3rem;
+        }
+
+        h2 {
+          font-size: 1.15rem;
+        }
+
+        .links-list a {
+          font-size: 0.9rem;
+        }
+      }
     </style>
   </head>
   <body>

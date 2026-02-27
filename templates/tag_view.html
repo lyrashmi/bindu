@@ -108,6 +108,75 @@
       color: var(--sand);
       text-decoration: underline;
     }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .logo-container img {
+        max-width: 200px;
+      }
+
+      .back-button {
+        width: 40px;
+        height: 40px;
+        top: 15px;
+        left: 15px;
+        font-size: 1.1rem;
+      }
+
+      .theme-toggle {
+        width: 40px;
+        height: 40px;
+        top: 15px;
+        right: 15px;
+        font-size: 1.1rem;
+      }
+
+      .container {
+        padding-top: 60px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-container img {
+        max-width: 150px;
+      }
+
+      .back-button {
+        width: 36px;
+        height: 36px;
+        top: 12px;
+        left: 12px;
+        font-size: 1rem;
+      }
+
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+        top: 12px;
+        right: 12px;
+        font-size: 1rem;
+      }
+
+      .container {
+        padding-top: 50px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .links-list a {
+        font-size: 0.9rem;
+      }
+    }
   </style>
   <script>
     const toggleTheme = () => {
