@@ -542,6 +542,51 @@ def notes_entries_files(filename):
     return send_from_directory(NOTES_ENTRIES_DIR, filename)
 
 
+def render_diff_html(diff_text):
+    """Convert git diff text to styled HTML."""
+    import html
+    lines = diff_text.split('\n')
+    html_parts = ['<div class="diff-view">']
+    current_file = None
+    in_hunk = False
+    
+    for line in lines:
+        escaped = html.escape(line)
+        
+        if line.startswith('diff --git'):
+            # New file diff header
+            if current_file:
+                html_parts.append('</div>')  # Close previous file block
+            # Extract filename
+            match = re.search(r'b/(.+)$', line)
+            fname = match.group(1) if match else 'file'
+            html_parts.append(f'<div class="diff-file"><div class="diff-file-header">{html.escape(fname)}</div>')
+            current_file = fname
+            in_hunk = False
+        elif line.startswith('index ') or line.startswith('---') or line.startswith('+++'):
+            # Skip index line and file indicators
+            continue
+        elif line.startswith('@@'):
+            # Hunk header (line range info)
+            html_parts.append(f'<div class="diff-hunk-header">{escaped}</div>')
+            in_hunk = True
+        elif in_hunk:
+            if line.startswith('+'):
+                html_parts.append(f'<div class="diff-line diff-add"><span class="diff-marker">+</span><span class="diff-content">{html.escape(line[1:])}</span></div>')
+            elif line.startswith('-'):
+                html_parts.append(f'<div class="diff-line diff-del"><span class="diff-marker">-</span><span class="diff-content">{html.escape(line[1:])}</span></div>')
+            elif line.startswith(' '):
+                html_parts.append(f'<div class="diff-line diff-ctx"><span class="diff-marker"> </span><span class="diff-content">{html.escape(line[1:])}</span></div>')
+            elif line.strip() == '':
+                html_parts.append('<div class="diff-line diff-ctx"><span class="diff-marker"> </span><span class="diff-content"></span></div>')
+    
+    if current_file:
+        html_parts.append('</div>')  # Close last file block
+    html_parts.append('</div>')
+    
+    return '\n'.join(html_parts)
+
+
 @app.route('/bindu/<bindu_name>/commit/<sha>')
 def bindu_commit(bindu_name, sha):
     """Return JSON with commit metadata and diff for the given sha."""
@@ -562,8 +607,11 @@ def bindu_commit(bindu_name, sha):
         diff_cmd = ['git', 'show', '--format=', sha]
         diff_res = subprocess.run(diff_cmd, cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         diff_text = diff_res.stdout if diff_res.returncode == 0 else ''
+        
+        # Generate styled HTML diff
+        diff_html = render_diff_html(diff_text) if diff_text else ''
 
-        return jsonify({'status': 'ok', 'meta': meta, 'diff': diff_text})
+        return jsonify({'status': 'ok', 'meta': meta, 'diff': diff_text, 'diff_html': diff_html})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 

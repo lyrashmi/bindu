@@ -272,6 +272,120 @@ blockquote {
 }
 
 /* ========================================
+   DIFF VIEW STYLES
+   ======================================== */
+
+.diff-view {
+  font-family: 'SF Mono', 'Consolas', 'Monaco', 'Liberation Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.diff-file {
+  margin-bottom: 1rem;
+}
+
+.diff-file:last-child {
+  margin-bottom: 0;
+}
+
+.diff-file-header {
+  background: var(--border);
+  color: var(--text);
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.diff-hunk-header {
+  background: rgba(100, 149, 237, 0.15);
+  color: var(--text);
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  opacity: 0.85;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.diff-line {
+  display: flex;
+  padding: 0;
+  border: none;
+  min-height: 1.5em;
+}
+
+.diff-marker {
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+  user-select: none;
+  font-weight: bold;
+  padding: 2px 0;
+}
+
+.diff-content {
+  flex: 1;
+  padding: 2px 12px 2px 8px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.diff-add {
+  background: rgba(46, 160, 67, 0.2);
+}
+
+.diff-add .diff-marker {
+  color: #2ea043;
+  background: rgba(46, 160, 67, 0.3);
+}
+
+.diff-del {
+  background: rgba(248, 81, 73, 0.2);
+}
+
+.diff-del .diff-marker {
+  color: #f85149;
+  background: rgba(248, 81, 73, 0.3);
+}
+
+.diff-ctx {
+  background: transparent;
+}
+
+.diff-ctx .diff-marker {
+  color: var(--text);
+  opacity: 0.4;
+}
+
+[data-theme='dark'] .diff-add {
+  background: rgba(63, 185, 80, 0.15);
+}
+
+[data-theme='dark'] .diff-add .diff-marker {
+  color: #3fb950;
+  background: rgba(63, 185, 80, 0.25);
+}
+
+[data-theme='dark'] .diff-del {
+  background: rgba(248, 81, 73, 0.15);
+}
+
+[data-theme='dark'] .diff-del .diff-marker {
+  color: #f85149;
+  background: rgba(248, 81, 73, 0.25);
+}
+
+[data-theme='dark'] .diff-hunk-header {
+  background: rgba(88, 166, 255, 0.1);
+}
+
+/* ========================================
    RESPONSIVE STYLES
    ======================================== */
 
