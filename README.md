@@ -33,7 +33,7 @@ Each note in the vault is a Markdown file. Notes are linked together using `[[wi
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/dgrmunch/bindu.git
+git clone https://github.com/lyrashmi/bindu.git
 cd bindu
 
 # 2. Create and activate a virtual environment (recommended)
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/dgrmunch/bindu.git
+git clone https://github.com/lyrashmi/bindu.git
 cd bindu
 
 # 2. Create and activate a virtual environment (recommended)
