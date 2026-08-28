@@ -289,7 +289,7 @@ def bindu(bindu_name):
     if not note_file:
         abort(404)
     with open(note_file, encoding='utf-8') as f:
-        raw_md = f.read()
+    	raw_md = f.read()
 
     settings = get_settings()
     
@@ -775,6 +775,46 @@ def edit_bindu(bindu_name):
     # Return rendered HTML for the updated content
     rendered_html, _, _ = get_note_content(bindu_name)
     return jsonify({'status': 'ok' if ok else 'error', 'git': out, 'html': rendered_html})
+
+@app.route('/bindu/<bindu_name>/lookup')    
+def lookup_bindu (bindu_name):
+	if session.get('role') != 'admin':
+		return jsonify({'status': 'error', 'message': 'Forbidden'}), 403
+	
+	found_list = []
+	note_map.pop(bindu_name)
+	norm_name = normalize_unicode(bindu_name)
+	
+
+	#clean and remove the () and sanskrit,
+	name = re.sub("[\(\[].*?[\)\]]", "", norm_name).casefold().strip()
+	
+	#excludes the [[
+	pattern = r'(?<!\[\[)\b' + name
+	
+	try:
+		for note_name, note_file in note_map.items():
+			with open(note_file, encoding='utf-8') as nf:
+				text = nf.read().casefold()
+				if re.search(pattern, text):
+					found_list.append(note_name)
+	except Exception as e:
+		return jsonify({'status': 'error', 'message': str(e)}), 500
+	
+	return render_template('lookup.html', bindu_name=bindu_name, found_list=found_list)
+
+@app.route('/api/highlight')   	  
+def highlight_other_bindus():
+	if session.get('role') != 'admin':
+		return jsonify({'status': 'error', 'message': 'Forbidden'}), 403
+	
+	
+	clean_keys = []
+	for key in note_map.keys():
+		key = normalize_unicode(key)
+		clean_keys.append(re.sub("[\(\[].*?[\)\]]", "", key).strip())
+		
+	return jsonify({'keys': clean_keys})
 
 if __name__ == '__main__':
     app.run(debug=True)

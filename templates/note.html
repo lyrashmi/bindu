@@ -33,6 +33,11 @@
         text-decoration: none;
         padding: 0;
       }
+      
+      .a-btn
+      {
+      text-decoration-line: none !important;
+      }
 
       .theme-toggle {
         position: fixed;
@@ -153,6 +158,15 @@
         border-bottom-color: transparent !important;
         box-shadow: none !important;
         transform: none !important;
+      }
+      
+      .side_buttons
+      {
+      	display:flex
+      }
+      .side_buttons div
+      {
+      	margin: 5px;
       }
 
       /* Hide the theme toggle explicitly here to override other inline rules */
@@ -424,12 +438,24 @@
                   {% endif %}
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between;">
-                  <h1 style="margin:0;">{{ note_name }}</h1>
+                  <div><h1 style="margin:0;">{{ note_name }}</h1></div>
+                  <div class="side_buttons">
                   <div>
                     {% if session.get('role') == 'admin' %}
                       <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editNoteModal">Edit</button>
                     {% endif %}
                   </div>
+                  <div>
+                    {% if session.get('role') == 'admin' %}
+                      <a class="btn a-btn" title="Looks up this bindu name in other notes" href="{{ url_for('lookup_bindu', bindu_name=note_name) }}">Lookup {{note_name}} in other notes</a>
+                    {% endif %}
+                  </div>
+                  <div>
+                    {% if session.get('role') == 'admin' %}
+                    <button type="button" id="highlight_btn" title="Highlights other bindus in this note" class="btn btn-secondary" >Highlight other bindus</button>
+				  	{% endif %}
+				  </div>
+                </div>
                 </div>
 
                 <div id="rendered-content">
@@ -955,6 +981,36 @@
       }
     })();
     </script>
+    {% if session.get('role') == 'admin' %}
+    <script>
+        async function highlight_bindus() {
+            let text = document.getElementById('rendered-content').innerHTML;
+
+            let response = await fetch('/api/highlight');
+            const data = await response.json();
+
+            //removes the bindu from the list
+            let bindu = "{{ note_name }}"
+            bindu = bindu.replace(/[\(\[].*?[\)\]]/g, "").toLowerCase().trim();
+            console.log(bindu)
+            const key_list = data.keys.filter(x => x !== bindu)
+            console.log(key_list)
+            for (key of key_list) {
+                let regex = new RegExp(`<a\\s+href="[^"]*">[\\s\\S]*?<\\/a\\s*>|(?<![/\\p{L}])${key}`, 'giu');
+                text = text.replaceAll(regex, match => {
+                    if (/^<a\s+href=/i.test(match)) {
+                        return match;
+                    }
+                    return `<mark>${match}</mark>`;
+                });
+            }
+            document.getElementById('rendered-content').innerHTML = text;
+        }
+
+    document.getElementById('highlight_btn').addEventListener("click", (highlight_bindus));
+
+    </script>
+    {% endif %}
 
     <!-- Footer -->
     <footer style="background: var(--card); border-top: 1px solid var(--border); padding: 30px 20px; margin-top: 60px; text-align: center; color: var(--text); font-size: 0.9rem;">
