@@ -1,1 +1,0 @@
-Beginningless and endless.

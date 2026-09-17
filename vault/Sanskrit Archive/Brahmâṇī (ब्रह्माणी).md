@@ -1,1 +1,0 @@
-Brahmâṇī is a mātṝkā (see: [[Aśtamātṝkā (अष्टमातृका)]]) and the Śakti (energy) of creator god Brahma.

@@ -1,1 +1,0 @@
-“lack of understanding,” “ignorance,” or “non-awakening.”

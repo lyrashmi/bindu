@@ -1,7 +1,0 @@
-As far as I understand it, there is a variety of forms of Śrīvidyā in South India, just as there are in the north.
-
-But it is true that to a large extent South Indian Śrīvidyā is strongly influenced by what we could call the Kañcīpuram tradition that gave rise to the Paurāṇik narratives of the Lalitopākhyāna, the Lalitāsahasranāma and the Paraśurāmakalpasūtra. These are not historically very influential in Nepalese and Kashmiri Śrīvidyā. 
-
-All forms of Śrīvidyā are ultimately grounded in Vāmakeśvara Tantra, as this is the tradition's root-āgama. However, in practice all lineages follow the āgamas not directly but through the intermediation of paddhatis. Paraśurāmakalpasūtra is one such paddhati; Kashmiri and Nepalese Śrīvidyā have their own paddhatis as well, which, however, do appear to more grounded in the āgamas. 
-
-There's also the fact that in its earlier centuries in South India, Śrīvidyā manuals and commentaries mostly followed Kashmiri philosophy as exegetical model. This Kashmiri lineage remained alive in South India until the XIXth Century at least; but since the XVIth century it has been eclipsed by Smārta exegetical models such as that of Bhaskararāya. That is another development in South Indian Śrīvidyā which is not as historically influential in Northern Śrīvidyā.

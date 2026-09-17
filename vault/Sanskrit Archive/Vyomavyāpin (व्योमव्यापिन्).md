@@ -1,1 +1,0 @@
-The power of the [[Vidyā (विद्या)]]. One of the most powerful mantras in the āgamas, also referred to as the Pāda mantra.

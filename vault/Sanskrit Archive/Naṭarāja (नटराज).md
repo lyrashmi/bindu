@@ -1,1 +1,0 @@
-Form of Lord [[Śiva (शिव)]] in his divine cosmic dance.

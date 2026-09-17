@@ -1,1 +1,0 @@
-The power of divine grace, also “true compassion” according to the Guhyasūtra.

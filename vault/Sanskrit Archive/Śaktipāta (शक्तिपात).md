@@ -1,1 +1,0 @@
-Transference or bestowing of spiritual energy/ grace through a spiritual master, leading the student to higher levels of consciousness. This is instantaneous, compared to mantra dikśa (initiation), where the buildup is more gradual as the student practices (krama system for example says this is a necessity for stability).

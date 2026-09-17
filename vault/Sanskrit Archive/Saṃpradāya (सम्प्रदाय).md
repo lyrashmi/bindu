@@ -1,3 +1,0 @@
-Denomination, sect, spiritual lineage.
-
-

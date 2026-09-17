@@ -1,2 +1,0 @@
-Triadic Kūṭa (heap, summit, peak, cluster) residing in the [[Bindu (बिन्दु)]], the seminal drop. 
-Mantric Kūṭa - code-like, symbolic, or condensed mantra, like a [[Bīja (बीज)]], or other esoteric correspondences.

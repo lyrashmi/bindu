@@ -1,1 +1,0 @@
-(The Ocean of the Sixteen Nityas): [[Tripurāsundarī (त्रिपुरासुन्दरी)|Shri Vidya]] primary text

@@ -1,3 +1,0 @@
-Esoteric systems comprising rituals, practices, and philosophies that transform both external and internal realities, based on the āgamas. Usually only the Śakta āgamas get called tantras, but in a broader sense tantra includes any such system. The main difference between advaita vedanta and tantra is that advaitans reject the material world, whereas tantrists accept both the transcendent ([[Śiva (शिव)|Śiva]]) and immanent ([[Śakti (शक्ति)|Śakti]]) as two sides of the same coin and work with them, realising that neither can function without the other.
-
-see also: [[Sāṃdhyābhāṣā (सांध्याभाषा)]], [[Pañcācāra (पञ्चाचार)]], [[Sthāpana (स्थापन)]]

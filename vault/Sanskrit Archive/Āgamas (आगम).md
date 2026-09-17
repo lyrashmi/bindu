@@ -1,1 +1,0 @@
- Tantric texts, lit. ‘That which has come down’ (received and transcribed by the rishis). There are 28 Saiva āgamas, 64 Śakta āgamas and 108 Vaishnava āgamas. Sarvāmnāya is comprised only the Śiva/Śakti ones, 92 in total

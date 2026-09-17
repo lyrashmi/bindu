@@ -1,1 +1,0 @@
-“Visualised form” (e.g., of the goddess)

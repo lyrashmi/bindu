@@ -1,1 +1,0 @@
-The inclination towards manifestation, revelation being the essential nature of the divine. More literally, opening out. For example, The world is an unmesa, or expansion (prasura) of the supreme as Śakti. A distinct blossoming of the universe.

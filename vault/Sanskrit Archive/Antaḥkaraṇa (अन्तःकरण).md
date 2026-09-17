@@ -1,1 +1,0 @@
-inner instruments, or inner faculty. - [[Manas (मनस्)]] (the mind that processes sensory input and doubts). Buddhi (the intellect or discriminative faculty, responsible for decision-making and reasoning). Ahaṅkāra (the ego or sense of "I" and identity). Chitta (the memory or storehouse of impressions; [[Saṃskāra (संस्कार)|saṃskāra]]).

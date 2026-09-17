@@ -1,1 +1,0 @@
-Samavaya is when the relation between the qualities and the substance, or the part and the whole is described.

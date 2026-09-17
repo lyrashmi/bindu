@@ -1,1 +1,0 @@
-**Ahaṃkāra** means _ego_, _I-maker_, or the principle of individuation.

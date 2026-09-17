@@ -1,1 +1,0 @@
-lit. “nine nights” and refers to the major Hindu festival dedicated to the Goddess ([[Ugracaṇḍā (उग्रचण्डा)]])

@@ -1,1 +1,0 @@
-Prayer, description or conversation; but always in poetic form.

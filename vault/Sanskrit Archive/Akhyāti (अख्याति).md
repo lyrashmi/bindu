@@ -1,1 +1,0 @@
-non-manifestation/ having no distinction between memory and perception (thinking the rope is a snake)

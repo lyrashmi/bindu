@@ -1,1 +1,0 @@
-lit. ‘Thusness; Suchness’. Refers to the nature of reality free from conceptual elaborations and the subject–object distinction.

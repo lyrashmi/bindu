@@ -1,1 +1,0 @@
-Resonance, from which arises sound ([[Nāda (नाद)]]). The scripture that is supremely hard to acquire is in the form of the resonance (dhvani) that comes from [[Śiva (शिव)]], the supreme cause who is tranquil and whose form is invisible.

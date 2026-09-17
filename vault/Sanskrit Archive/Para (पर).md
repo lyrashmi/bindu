@@ -1,1 +1,0 @@
-Para indicates transcendence, whereas [[Maha (मह)]] indicates immanence (that which is still replete with the triadic potencies, being under the domain of maya).

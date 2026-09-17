@@ -1,1 +1,0 @@
-Association, assembly, community, company.

@@ -1,5 +1,0 @@
-The Mahamudra (great seal) holds fast the supernal nectar of paramount bliss from the ocean of consciousness (consisting of the harmonious unity, samarasya), due to ignorance of [[Śiva (शिव)|Shambhavamudra]]. Released with the intention of enjoying ones own nature (svopabhoga). It is savoured by the inner mouth in the abode of the supreme energy of consciousness called the ‘Heart of the Yogini’. This occurs through a withdrawing of the outpouring of externality (the triangle). Shining as the [[Śiva (शिव)|Primordial Lord]], he is the one who severed the three bonds and occasions the expansion and contraction of ‘Kula’, which is the circle of of the deities ruling the senses; and so excels all.
-
-See: [[Anuttara (अनुत्तर)]]
-See: [[Visarga (विसर्ग)]]
-Blood is always a metaphor for rajas. The skull is a metaphor for sattva; the skull cup (kapala) containing ambrosia (amrita) after the defeat of Chanda and Munda (see: [[Devīmahātmyam (देवीमहात्म्य)]]).

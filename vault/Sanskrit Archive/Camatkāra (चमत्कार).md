@@ -1,1 +1,0 @@
-Spontaneous flash of wonder and insight. It is instantaneous. 

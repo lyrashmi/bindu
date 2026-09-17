@@ -1,3 +1,0 @@
-Pure consciousness
-
-[[Śiva (शिव)]]

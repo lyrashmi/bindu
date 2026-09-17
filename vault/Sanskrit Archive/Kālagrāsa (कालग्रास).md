@@ -1,3 +1,0 @@
-Refers to assimilation of time (into non-temporal consciousness)” and represents the third of the four moments in the act of perception. The Mahānayaprakāśa verse 3.1 lists these four as 1) udaya, ‘arising’, 2) avabhāsa, ‘manifestation’. 3) kālagrāsa, ‘assimilation of time (into non-temporal consciousness)’. 4) svarūpaviśrānti ‘repose in one’s own nature’. The Manthānabhairavatantra talks about kālagrāsa as a “large sword”, held by twenty-armed Bhairava, on who’s lap the goddess sits.
-
-See also: [[Kālasaṃkarṣiṇī (कालसंकर्षिणी)]]
