@@ -344,23 +344,24 @@ def bindu(bindu_name):
 
     # Collect git history for this bindu and its entries
     history = []
-    try:
-        repo_dir = os.path.dirname(__file__)
-        files = [note_file]
-        for fname in os.listdir(NOTES_ENTRIES_DIR):
-            if fname.startswith(norm_name + '_'):
-                files.append(os.path.join(NOTES_ENTRIES_DIR, fname))
-        for f in files:
-            cmd = ['git', 'log', '--pretty=format:%H||%an||%ai||%s', '--', _repo_rel(f)]
-            res = subprocess.run(cmd, cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-            if res.returncode == 0:
-                for line in res.stdout.splitlines():
-                    parts = line.split('||', 3)
-                    if len(parts) == 4:
-                        sha, author, date, subj = parts
-                        history.append({'sha': sha, 'author': author, 'date': date, 'message': subj})
-    except Exception:
-        history = []
+    if session.get('role') == 'admin':
+        try:
+            repo_dir = os.path.dirname(__file__)
+            files = [note_file]
+            for fname in os.listdir(NOTES_ENTRIES_DIR):
+                if fname.startswith(norm_name + '_'):
+                    files.append(os.path.join(NOTES_ENTRIES_DIR, fname))
+            for f in files:
+                cmd = ['git', 'log', '--pretty=format:%H||%an||%ai||%s', '--', _repo_rel(f)]
+                res = subprocess.run(cmd, cwd=repo_dir, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                if res.returncode == 0:
+                    for line in res.stdout.splitlines():
+                        parts = line.split('||', 3)
+                        if len(parts) == 4:
+                            sha, author, date, subj = parts
+                            history.append({'sha': sha, 'author': author, 'date': date, 'message': subj})
+        except Exception:
+            history = []
     # Prepare notes list for link autocompletion
     all_notes_json = json.dumps(sorted(note_map.keys()))
     return render_template('note.html',
@@ -658,8 +659,7 @@ def add_note_entry(bindu_name):
             ef.write(f"# {title}\n\n")
             ef.write(f"_by {session['username']} on {time.ctime(timestamp)}_\n\n")
             ef.write(body)
-            ef.write(f"\n\n[Original bindu](/bindu/{bindu_name})\n")
-
+            
         # add link to index file for this note
         index_file = os.path.join(NOTES_DIR, f"{norm_name}.md")
         rel_link = f"/notes_entries/{filename}"
@@ -780,9 +780,9 @@ def edit_bindu(bindu_name):
 def lookup_bindu (bindu_name):
 	if session.get('role') != 'admin':
 		return jsonify({'status': 'error', 'message': 'Forbidden'}), 403
-	
 	found_list = []
-	note_map.pop(bindu_name)
+	if bindu_name in note_map:
+		note_map.pop(bindu_name)
 	norm_name = normalize_unicode(bindu_name)
 	
 

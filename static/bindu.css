@@ -1,0 +1,580 @@
+
+@font-face {
+    font-family: "Libertinus Serif";
+    src: url("/fonts/LibertinusSerif-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Libertinus Serif";
+    src: url("/fonts/LibertinusSerif-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Shobhika";
+    src: url("/fonts/Shobhika-400.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+
+    unicode-range:
+        U+0900-097F, /* Devanāgarī */
+        U+A8E0-A8FF, /* Devanāgarī Extended */
+        U+1CD0-1CFF; /* Vedic Extensions */
+}
+
+@font-face {
+    font-family: "Shobhika";
+    src: url("/fonts/Shobhika-700.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+
+    unicode-range:
+        U+0900-097F, /* Devanāgarī */
+        U+A8E0-A8FF, /* Devanāgarī Extended */
+        U+1CD0-1CFF; /* Vedic Extensions */
+}
+
+
+/* =========================
+   Main font stack
+   ========================= */
+
+body {
+    font-family:
+        "Libertinus Serif",
+        "Shobhika",
+        serif;
+}
+
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--sand);
+  border: 2px solid var(--spiritual-blue);
+  color: var(--spiritual-blue);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(27, 73, 101, 0.2);
+  z-index: 1000;
+  text-decoration: none;
+  padding: 0;
+}
+
+.a-btn {
+  text-decoration-line: none !important;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: 2px solid var(--text);
+  color: var(--text);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  z-index: 1001;
+  padding: 0;
+}
+
+
+.login-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 12px;
+  border: 2px solid var(--text);
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+  z-index: 1010;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+/* ===== Logo container ===== */
+
+.logo-container {
+  text-align: center;
+  padding: 40px 20px 20px;
+  margin-bottom: 30px;
+}
+
+.logo-container img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  transition: opacity 0.3s ease;
+}
+
+.logo-container .logo-light {
+  display: block;
+}
+
+.logo-container .logo-dark {
+  display: none;
+}
+
+[data-theme='dark'] .logo-container .logo-light {
+  display: none;
+}
+
+[data-theme='dark'] .logo-container .logo-dark {
+  display: block;
+}
+
+/* ===== Tab system  ===== */
+.note-tabs {
+  border-bottom: 2px solid var(--text);
+  background: var(--card);
+}
+
+.note-tabs .nav-link {
+  color: var(--text);
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 500;
+  transition: none;
+  padding: 12px 20px;
+  background: transparent;
+}
+
+.note-tabs .nav-link:hover,
+.note-tabs .nav-link:focus {
+  color: var(--text) !important;
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.note-tabs .nav-link.active {
+  color: var(--text);
+  border-bottom-color: var(--text);
+  background: transparent;
+}
+
+.note-tab-content {
+  padding: 20px 0;
+}
+
+.side_buttons {
+  display: flex;
+}
+
+.side_buttons div {
+  margin: 5px;
+}
+
+/* ===== Mandala graph view ===== */
+.mandala-container {
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#graph {
+  width: 100%;
+  height: 500px;
+  border: none;
+}
+
+.links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.links-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.links-list li:last-child {
+  border-bottom: none;
+}
+
+.links-list a {
+  color: var(--spiritual-blue);
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.links-list a:hover {
+  color: var(--sand);
+  text-decoration: underline;
+}
+
+.link-autocomplete {
+  position: absolute;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 2000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: none;
+}
+
+.link-autocomplete.active {
+  display: block;
+}
+
+.link-autocomplete-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.link-autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.link-autocomplete-item:hover,
+.link-autocomplete-item.highlighted {
+  background: var(--spiritual-blue);
+  color: #fff;
+}
+
+/* ===== Mandala intro text  ===== */
+.mandala-intro {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 30px;
+  background: var(--card);
+  border-left: 4px solid var(--spiritual-blue);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== Search ===== */
+.search-container {
+  max-width: 600px;
+  margin: 40px auto;
+  position: relative;
+  padding: 0 15px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 1.1rem;
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  transition: all 0.3s ease;
+  font-family: "Faculty Glyphic", "Georgia", serif;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(27, 73, 101, 0.1);
+  border-color: var(--spiritual-blue);
+}
+
+.autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-top: none;
+  max-height: 400px;
+  overflow-y: auto;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-list.active {
+  display: block;
+}
+
+.autocomplete-item {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border);
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.highlighted {
+  background: var(--spiritual-blue);
+  color: white;
+  padding-left: 30px;
+}
+
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.results-container {
+  margin-top: 40px;
+}
+
+/* ===== Mandala grid / cards ===== */
+.mandala-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.mandala-card {
+  background: var(--card);
+  border: 2px solid var(--border);
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.mandala-card:hover {
+  border-color: var(--text);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mandala-card.orphan {
+  background: rgba(255, 200, 200, 0.3);
+  border-color: rgba(200, 100, 100, 0.4);
+}
+
+[data-theme='dark'] .mandala-card.orphan {
+  background: rgba(150, 50, 50, 0.25);
+  border-color: rgba(200, 100, 100, 0.4);
+}
+
+.mandala-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.featured-section {
+  margin-top: 60px;
+  padding: 40px 20px;
+  border-left: 4px solid var(--text);
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+/* =========================================================
+   RESPONSIVE — 768px
+   ========================================================= */
+@media (max-width: 768px) {
+  .logo-container {
+    padding: 15px 10px;
+    margin-bottom: 15px;
+  }
+  .logo-container img {
+    max-width: 200px;
+  }
+
+  .back-button {
+    width: 40px;
+    height: 40px;
+    top: 15px;
+    left: 15px;
+    font-size: 1.1rem;
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    top: 12px;
+    right: 12px;
+    font-size: 1.1rem;
+  }
+
+  .login-button {
+    top: 12px;
+    right: 12px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .container-fluid,
+  .container {
+    padding-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .note-tabs .nav-link {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .note-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mandala-container {
+    min-height: 350px;
+  }
+
+  #graph {
+    height: 350px;
+  }
+
+  .mandala-intro {
+    margin: 20px 10px;
+    padding: 20px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .search-container {
+    margin: 30px auto;
+    padding: 0 10px;
+  }
+
+  .mandala-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 25px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — 480px
+   ========================================================= */
+@media (max-width: 480px) {
+  .logo-container {
+    padding: 10px 8px;
+    margin-bottom: 10px;
+  }
+  .logo-container img {
+    max-width: 150px;
+  }
+
+  .back-button {
+    width: 36px;
+    height: 36px;
+    top: 12px;
+    left: 12px;
+    font-size: 1rem;
+  }
+
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    top: 10px;
+    right: 10px;
+    font-size: 1rem;
+  }
+
+  .login-button {
+    top: 10px;
+    right: 10px;
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+
+  .container-fluid,
+  .container {
+    padding-top: 50px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .note-tabs .nav-link {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .mandala-container {
+    min-height: 280px;
+  }
+
+  #graph {
+    height: 280px;
+  }
+
+  .mandala-intro {
+    margin: 15px 5px;
+    padding: 15px;
+    font-size: 0.9rem;
+    border-left-width: 3px;
+  }
+
+  .search-container {
+    margin: 25px auto;
+    padding: 0 5px;
+  }
+
+  .mandala-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+  }
+
+  .links-list a {
+    font-size: 0.9rem;
+  }
+}
