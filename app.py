@@ -52,6 +52,7 @@ def save_settings(settings):
 
 # Global variables to hold vault data
 note_map = {}       # note identifier (normalized lowercase) -> full path to .md file
+public_note_map = {} # same as note_map but only for notes that are meant to be public
 backlinks_map = {}  # note identifier -> list of notes that link here
 link_graph = {}     # note identifier -> list of notes this note links to
 
@@ -176,12 +177,13 @@ def git_commit(paths, message, author=None):
         return (False, str(e))
 
 def update_vault_index():
-    global note_map, backlinks_map, link_graph
+    global note_map, backlinks_map, link_graph, public_note_map
     while True:
         # Update file index first (all files including images)
         update_file_index()
 
         temp_note_map = {}
+        temp_public_note_map = {}
         temp_link_graph = {}
 
         for root, dirs, files in os.walk(VAULT_DIR):
@@ -193,6 +195,8 @@ def update_vault_index():
 
                     with open(full_path, encoding="utf-8") as f:
                         content = f.read()
+                    if not re.search(r'(?<!\w)#private(?!\w)', content):
+                        temp_public_note_map[identifier] = full_path
 
                     # Find [[links]] excluding image markdown: ![alt](file)
                     links = re.findall(r'\[\[([^\]]+)\]\]', content)
@@ -210,6 +214,7 @@ def update_vault_index():
                     temp_backlinks_map[tgt].append(src)
 
         note_map = temp_note_map
+        public_note_map = temp_public_note_map
         link_graph = temp_link_graph
         backlinks_map = temp_backlinks_map
 
@@ -246,7 +251,11 @@ def index():
     if settings.get('all_private', False) and 'username' not in session:
         return redirect(url_for('login', next=request.path))
     
-    notes = sorted(note_map.keys())
+    #hide notes with #private from the list for unlogged users
+    if settings.get('private_tag_enabled', True) and 'username' not in session:
+        notes = notes = sorted(public_note_map.keys())
+    else:
+        notes = sorted(note_map.keys())
     notes_json = json.dumps(notes)
     
     # Compute orphan bindus (no backlinks AND no forward links) for admin view
