@@ -26,6 +26,16 @@
         });
       }
 
+      function stripDiacritics(text) {
+          return text.normalize('NFKD').replace(/\p{Diacritic}/gu, '');
+        }
+
+      const searchIndex = allNotes.map(note => ({
+          note,
+          normalized: stripDiacritics(note.toLowerCase())
+        }));
+      
+
       function createConceptCard(noteName) {
         const card = document.createElement('div');
         card.className = 'mandala-card';
@@ -47,7 +57,7 @@
       }
 
       searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
+        const query = e.target.value.trim();
         highlightedIndex = -1;
 
         if (query.length === 0) {
@@ -57,9 +67,11 @@
         }
 
         // Filter notes based on query
-        const filtered = allNotes.filter(note => 
-          note.toLowerCase().includes(query)
-        ).slice(0, 10); // Limit to 10 results
+        const normalizedQuery = stripDiacritics(query.toLowerCase());
+        const filtered = searchIndex
+          .filter(entry => entry.normalized.includes(normalizedQuery))
+          .slice(0, 10)
+          .map(entry => entry.note);
 
         if (filtered.length === 0) {
           autocompleteList.classList.remove('active');
