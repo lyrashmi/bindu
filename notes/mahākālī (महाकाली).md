@@ -1,0 +1,2 @@
+# Notes for mahākālī (महाकाली)
+

@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "username": "vivien",
+      "password": "ohneworte",
+      "role": "admin"
+    },
+    {
+      "username": "ravi",
+      "password": "vyomavyapin",
+      "role": "admin"
+    },
+    {
+      "username": "danillo",
+      "password": "mahakala",
+      "role": "admin"
+    },
+    {
+      "username": "maciek",
+      "password": "vidyadev",
+      "role": "admin"
+    }
+  ]
+}
