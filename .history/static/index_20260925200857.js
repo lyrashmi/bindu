@@ -11,7 +11,7 @@
       // Initialize featured and all concepts on page load
       function initializePage() {
         // Show featured concepts (specific selection)
-        const featured = ['the three orders of śākta practice: durgā, āmnāya, mahāvidyā', 'vyomavyāpin mantra - practical and philosophical considerations'];
+        const featured = ['ugracaṇḍā (उग्रचण्डा)', 'deities', 'visarga (विसर्ग)', 'devīmahātmyam (देवीमहात्म्य)'];
         displayConcepts(featured, featuredGrid);
 
         // Show all concepts

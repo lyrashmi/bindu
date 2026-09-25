@@ -1,0 +1,8 @@
+# Exclude specific JSON files
+users.json
+settings.json
+vault_index.json
+
+# Exclude specific folders and their contents
+vault/
+notes/
