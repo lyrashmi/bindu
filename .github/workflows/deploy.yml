@@ -9,21 +9,23 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via SSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
-        run: |
-          # Set up the SSH key securely
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-          # Add VPS to known hosts to prevent connection prompts
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-
-          # Connect to VPS, pull code, and restart the app
-          ssh -i ~/.ssh/deploy_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script: |
+            echo "Starting deployment..."
             cd /var/www/bindu
-            git pull origin main
+            
+            # Force the VPS to exactly match the GitHub main branch
+            # This prevents "git pull" errors from local file changes
+            git fetch origin
+            git reset --hard origin/main
+            
+            # Restart the Gunicorn service
             systemctl restart bindu
-          EOF
+            
+            echo "Deployment complete!"
