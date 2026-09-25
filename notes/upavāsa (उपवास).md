@@ -1,2 +1,0 @@
-# Notes for upavāsa (उपवास)
-
