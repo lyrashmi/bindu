@@ -35,3 +35,4 @@ jobs:
             systemctl restart bindu
 
             echo "✅ Deployment finished successfully!"
+# Trigger deployment
