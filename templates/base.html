@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% block head %}{% endblock %}
+    <meta charset="utf-8">
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="preload" href="{{ url_for('static', filename='fonts/shobhika-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ url_for('static', filename='fonts/shobhika-700.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ url_for('static', filename='fonts/LibertinusSerif-Bold.woff2') }}" as="font" type="font" crossorigin>
+    <link rel="preload" href="{{ url_for('static', filename='fonts/LibertinusSerif-Regular.woff2') }}" as="font" type="font" crossorigin>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bindu.css') }}" rel="stylesheet">
+
+
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  </head>
+<body>
+  <!-- Centered Logo -->
+    <div class="logo-container">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Bindu Logo" class="logo-light" />
+      <img src="{{ url_for('static', filename='logo-dark.png') }}" alt="Bindu Logo" class="logo-dark" />
+    </div>
+  {% block content %}
+  
+
+  {% endblock %}
+
+    <!-- Footer -->
+    <footer style="background: var(--card); border-top: 1px solid var(--border); padding: 30px 20px; margin-top: 60px; text-align: center; color: var(--text); font-size: 0.9rem;">
+      <p>© <a href="https://vimarshafoundation.org/" style="color: var(--text); ">Vimarsha Foundation</a>. All rights reserved.</p>
+    </footer>
+    {% block footer %}{% endblock %}
+    <script src="{{ url_for('static', filename='shared.js') }}"></script>
+  </body>
+</html>
