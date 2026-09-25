@@ -20,5 +20,10 @@
       "password": "vidyadev",
       "role": "admin"
     }
-  ]
+    {
+      "username": "student",
+      "password": "vidyakosha",
+      "role": "student"
+    }
+ ]
 }
