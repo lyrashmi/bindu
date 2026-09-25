@@ -1,2 +1,0 @@
-# Notes for saṃhitā (संहिता)
-

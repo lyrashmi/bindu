@@ -1,2 +1,0 @@
-# Notes for bīja (बीज)
-
