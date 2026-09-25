@@ -1,0 +1,2 @@
+# Notes for vāsanā (वासना)
+

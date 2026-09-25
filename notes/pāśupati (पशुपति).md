@@ -1,0 +1,2 @@
+# Notes for pāśupati (पशुपति)
+
