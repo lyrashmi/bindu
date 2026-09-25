@@ -1,0 +1,22 @@
+name: Debug SSH Connection
+
+on:
+  workflow_dispatch: # This makes it manually triggerable from GitHub UI
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test SSH Connection
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          insecure_ignore_host_key: true
+          debug: true
+          script: |
+            echo "SSH Connection Successful!"
+            whoami
+            pwd
