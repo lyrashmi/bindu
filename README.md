@@ -3,6 +3,8 @@
 ![Bindu Logo](static/logo.png)
 
 https://bindu.vimarsha.org
+
+
 **Bindu** is a Flask-based web application that serves as a *mandalic hypertext browser* — a knowledge-base system for exploring interconnected concepts as discrete nodes (bindus). It was originally developed by [Vimarsha Foundation](https://vimarshafoundation.org/) to facilitate the study of Sanskrit philosophical concepts within the [Sarvāmnāya](https://www.vimarshafoundation.org/tradition) tradition.
 
 Each note in the vault is a Markdown file. Notes are linked together using `[[wiki-style]]` links, and the application automatically builds backlink and forward-link graphs, tag indexes, and a search interface. Authenticated users can add annotations to any concept node, and administrators can edit the vault content directly through the browser.
