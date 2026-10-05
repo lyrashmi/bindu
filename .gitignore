@@ -4,5 +4,3 @@ settings.json
 vault_index.json
 
 # Exclude specific folders and their contents
-vault/
-notes/
