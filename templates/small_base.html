@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="preload" href="/static/fonts/shobhika-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/static/fonts/shobhika-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ url_for('static', filename='fonts/shobhika-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ url_for('static', filename='fonts/shobhika-700.woff2') }}" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="{{ url_for('static', filename='fonts/LibertinusSerif-Bold.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ url_for('static', filename='fonts/LibertinusSerif-Regular.woff2') }}" as="font" type="font/woff2" crossorigin>
     
 
      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">

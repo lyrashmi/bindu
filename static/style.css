@@ -35,8 +35,6 @@
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: "Faculty Glyphic", "Georgia", serif;
-  font-weight: 300;
   font-style: normal;
   font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
